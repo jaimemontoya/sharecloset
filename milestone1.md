@@ -2,9 +2,9 @@
 
 **Team members:**
 
-Apri Uzzle <auzzle@u.rochester.edu>
-Emily Michel <emichel2@u.rochester.edu>
-Jaime Montoya <jmontoy4@cs.rochester.edu>
+* Apri Uzzle <auzzle@u.rochester.edu>
+* Emily Michel <emichel2@u.rochester.edu>
+* Jaime Montoya <jmontoy4@cs.rochester.edu>
 
 **What is the proposed name for your Web application?**
 ShareCloset

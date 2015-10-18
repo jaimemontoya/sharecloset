@@ -17,7 +17,7 @@ The problem that this application is intended to solve is connecting donors with
 
 **How will it meet the minimum project requirements?**  
 
-**CREATE:** The application will allow donors to create accounts and keep track of their donations. Organizations will also be able to create accounts and list their needed items and contact information in case individuals want to donate to their wishlist. Users will insert items into the database and organizations will create a wishlist of items that they need in order of priority..  
+**CREATE:** The application will allow donors to create accounts and keep track of their donations. Organizations will also be able to create accounts and list their needed items and contact information in case individuals want to donate to their wishlist. Users will insert items into the database and organizations will create a wishlist of items that they need in order of priority.  
 
 **READ:** Users will be able to select and filter the organizations where they want to donate items through the website. Selecting items from the wishlists created by the organizations will facilitate the connections between donors and organizations.  
 

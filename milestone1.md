@@ -1,4 +1,4 @@
-Team name: ShareCloset
+**Team name:** ShareCloset
 
 Team members:
 

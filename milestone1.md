@@ -19,12 +19,8 @@ Sharitable
 **UPDATE:** Individuals will update their profile information and the items they wish to donate. Organizations will update information like the items they need and their contact information.  
 **DELETE:** Individuals and organizations can delete their accounts as well as donation items they have or need, respectively.  
   
-**What is your proposed Web application unique or creative beyond simply meeting the minimum requirements?** * The application is unique because it addresses an issue 
-that is prevalent across many local communities and presents a technological solution. By creating a centralized place where donors and organizations can connect, it 
-makes the process of donating items much easier. This website is also unique because it does not focus on monetary donations. It focuses on donating items that can be 
-immediately put to use, such as clothing, tables, beds, etc. It is also very donor centered in that it is up to the individual to reach out to the organization. It will 
-go beyond the minimum requirements because it will use Google Maps API to find local organizations. In addition, the website will solve a real problem, providing an 
-interactive platform to connect individuals with organizations that goes beyond the requirements to create, select, update, and delete entries from the database.
+**What is your proposed Web application unique or creative beyond simply meeting the minimum requirements?** 
+The application is unique because it addresses an issue that is prevalent across many local communities and presents a technological solution. By creating a centralized place where donors and organizations can connect, it makes the process of donating items much easier. This website is also unique because it does not focus on monetary donations. It focuses on donating items that can be immediately put to use, such as clothing, tables, beds, etc. It is also very donor centered in that it is up to the individual to reach out to the organization. It will go beyond the minimum requirements because it will use Google Maps API to find local organizations. In addition, the website will solve a real problem, providing an interactive platform to connect individuals with organizations that goes beyond the requirements to create, select, update, and delete entries from the database.
 
 
 

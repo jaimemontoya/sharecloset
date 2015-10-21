@@ -2,25 +2,62 @@
   <head>
     <title>Sharitable</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Kite%20One">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Kite%20One">    
   </head>
   <body>
-    <header>
-      <div class="main">
-        <div id="headerlogo">
-          <span id="logo">Sharitable</span>
-        </div>
-        <ul>
-          <li>Home</li>
-	  <li>Contact</li>
-        </ul>
+    <div id="base">
+      <div id="login">
+	<div class="main">
+	  <span id="logintext"><a href="#">Login</a></span>
+	</div>
       </div>
-    </header>
-    <div id="contentarea">
-      Main content
+      <header>
+        <div class="main">
+          <div id="headerlogo">
+            <span id="logo">Sharitable</span>
+          </div>
+          <ul id="headermenu">
+            <li><a href="#" class="homebutton">Home</a></li>
+	    <li><a href="#" class="aboutbutton">About</a></li>
+  	    <li><a href="#" class="contactbutton">Contact</a></li>
+          </ul>
+        </div>
+      </header>
+      <div id="contentarea">
+        <div class="main">
+          <div id="content">Main content</div>
+        </div>
+      </div>
     </div>
     <footer>
-      <p>Sharitable</p>
+      <div class="main">
+        <ul id="footermenu">
+          <li><a href="#" class="homebutton">Home</a></li>
+          <li><a href="#" class="aboutbutton">About</a></li>
+          <li><a href="#" class="contactbutton">Contact</a></li>
+        </ul>
+      </div>
     </footer>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".homebutton").click(function(){
+	  $.ajax({
+	    // Code to run if the request succeeds.
+	    success: function(data){
+	      $("#content").html("Welcome to the Home page!");
+	    }
+	  })
+	});
+	$(".aboutbutton").click(function(){
+	  $.ajax({
+	    // Code to run if the request succeeds.
+	    success: function(data){
+	      $("#content").html("Welcome to the About!");
+	    }
+	  })
+	});
+      });
+    </script>
   </body>
 </html>

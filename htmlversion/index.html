@@ -1,3 +1,4 @@
+
 <html>
   <head>
     <title>Sharitable</title>
@@ -8,7 +9,7 @@
     <div id="base">
       <div id="login">
 	<div class="main">
-	  <span id="logintext"><a href="#">Login</a></span>
+	  <span id="logintext"><a href="#" id="loginbutton">Login</a></span>
 	</div>
       </div>
       <header>
@@ -41,23 +42,36 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        $(".homebutton").click(function(){
+	$("#loginbutton").click(function(){
 	  $.ajax({
-	    // Code to run if the request succeeds.
-	    success: function(data){
+	    success: function(){
+	      $("#content").html("<div>Username:</div><div>Password:</div>");
+	    }
+	  })
+	});
+        $(".homebutton").click(function(){
+	  $.ajax({	    
+	    success: function(){
 	      $("#content").html("Welcome to the Home page!");
 	    }
 	  })
 	});
 	$(".aboutbutton").click(function(){
-	  $.ajax({
-	    // Code to run if the request succeeds.
-	    success: function(data){
+	  $.ajax({	    
+	    success: function(){
 	      $("#content").html("Welcome to the About!");
 	    }
 	  })
 	});
       });
+      $(".contactbutton").click(function(){
+        $.ajax({
+	  success: function(){
+	    $("#content").html("Welcome to the Contact page!");
+	  }
+	});
+      });
     </script>
   </body>
 </html>
+

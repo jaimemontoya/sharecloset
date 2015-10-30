@@ -1,4 +1,3 @@
-
 <html>
   <head>
     <title>Sharitable</title>
@@ -43,12 +42,7 @@
     <script type="text/javascript">
       $(document).ready(function(){
 	$("#loginbutton").click(function(){
-
-	  // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-          // Using the core $.ajax() method
 	  $.ajax({
-	    // The URL for the request
-	    url: "functions/crud.py",  
 	    success: function(){
 	      $("#content").html("<div>Username:</div><div>Password:</div><div id='leftCol' style='float: left; width: 30%; background-color:#b0c4de; height: 400px;'><h1>my items</h1><p> this is a test</p><button id='update' onclick='popup(mylink, windowname)'>UPDATE</button></div><div id='rightCol' style='float: right; width: 70%; background-color:red; height:400px'><h1>my matches</h1><p> this is div 2</p><div id = 'item1' style='float:left; width =30%; background-color:yellow; height: 200px;'><img src='elephant.jpe' width = '50px'><h4>Organization Name</h4><p>Here is information about this wonderful organization</p><button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button></div><button id = 'rematch'>REMATCH</button></div>");
 	    }
@@ -80,7 +74,6 @@
       var windowname = "Bob";
       var mylink2 = "preview.html";
       var windowname2 = "Preview";
-
       function popup(mylink, windowname) { 
 	    console.log("hey");
 	    if (! window.focus)return true; 
@@ -95,4 +88,3 @@
     </script>
   </body>
 </html>
-

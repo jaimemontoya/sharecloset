@@ -1,108 +1,118 @@
 <html>
-  <head>
-    <title>Sharitable</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Kite%20One">    
-  </head>
-  <body>
-    <div id="base">
-      <div id="login">
-	<div class="main">
-	  <span id="logintext"><a href="#" id="loginbutton">Login</a></span>
-	</div>
+<head>
+  <title>Sharitable</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Kite%20One">    
+</head>
+<body>
+  <div id="base">
+    <div id="login">
+     <div class="main">
+       <span id="logintext"><a href="#" id="loginbutton">Login</a></span>
+     </div>
+   </div>
+   <header>
+    <div class="main">
+      <div id="headerlogo">
+        <span id="logo">Sharitable</span>
       </div>
-      <header>
-        <div class="main">
-          <div id="headerlogo">
-            <span id="logo">Sharitable</span>
-          </div>
-          <ul id="headermenu">
-            <li><a href="#" class="homebutton">Home</a></li>
-	    <li><a href="#" class="aboutbutton">About</a></li>
-  	    <li><a href="#" class="contactbutton">Contact</a></li>
-          </ul>
-        </div>
-      </header>
-      <div id="contentarea">
-        <div class="main">
-          <div id="content">Main content</div>
-        </div>
-      </div>
+      <ul id="headermenu">
+        <li><a href="#" class="homebutton">Home</a></li>
+        <li><a href="#" class="aboutbutton">About</a></li>
+        <li><a href="#" class="contactbutton">Contact</a></li>
+      </ul>
     </div>
-    <footer>
-      <div class="main">
-        <ul id="footermenu">
-          <li><a href="#" class="homebutton">Home</a></li>
-          <li><a href="#" class="aboutbutton">About</a></li>
-          <li><a href="#" class="contactbutton">Contact</a></li>
-        </ul>
-      </div>
-    </footer>
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
+  </header>
+  <div id="contentarea">
+    <div class="main">
+      <div id="content">Main content</div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="main">
+    <ul id="footermenu">
+      <li><a href="#" class="homebutton">Home</a></li>
+      <li><a href="#" class="aboutbutton">About</a></li>
+      <li><a href="#" class="contactbutton">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
 	$("#loginbutton").click(function(){
-	  $.ajax({
-	    success: function(){
-	      $("#content").html("\
-	        <div>Username:</div>\
-		<div>Password:</div>\
-		<div id='leftCol' style='float: left; width: 30%; background-color:#b0c4de; height: 400px;'>\
-		  <h1>my items</h1>\
-		  <p> this is a test</p>\
-		  <button id='update' onclick='popup(mylink, windowname)'>UPDATE</button>\
-		</div>\
-		<div id='rightCol' style='float: right; width: 70%; background-color:red; height:400px'>\
-		  <h1>my matches</h1>\
-		  <p> this is div 2</p>\
-		  <div id = 'item1' style='float:left; width =30%; background-color:yellow; height: 200px;'>\
-		    <img src='elephant.jpe' width = '50px'>\
-		    <h4>Organization Name</h4>\
-		    <p>Here is information about this wonderful organization</p>\
-		    <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
-		  </div>\
-		  <button id = 'rematch'>REMATCH</button></div>\
-	      ");
-	    }
-	  })
-	});
-        $(".homebutton").click(function(){
-	  $.ajax({	    
-	    success: function(){
-	      $("#content").html("Welcome to the Home page!");
-	    }
-	  })
-	});
-	$(".aboutbutton").click(function(){
-	  $.ajax({	    
-	    success: function(){
-	      $("#content").html("Welcome to the About!");
-	    }
-	  })
-	});
-      });
-      $(".contactbutton").click(function(){
-        $.ajax({
-	  success: function(){
-	    $("#content").html("Welcome to the Contact page!");
-	  }
-	});
-      });
+   $.ajax({
+     success: function(){
+       $("#content").html("\
+        <div>\
+        <div>Username: <input id='usernameBox' type='text' size='20' /></div>\
+        <div>Password: <input id='passwordBox' type='password' size='20' /></div>\
+        <div><button id='loginButtonOnForm'>Login</button></div>\
+        </div>\
+        <div id='leftCol' style='float: left; width: 30%; background-color:#b0c4de; height: 400px;'>\
+        <h1>my items</h1>\
+        <p> this is a test</p>\
+        <button id='update' onclick='popup(mylink, windowname)'>UPDATE</button>\
+        </div>\
+        <div id='rightCol' style='float: right; width: 70%; background-color:red; height:400px'>\
+        <h1>my matches</h1>\
+        <p> this is div 2</p>\
+        <div id = 'item1' style='float:left; width =30%; background-color:yellow; height: 200px;'>\
+        <img src='elephant.jpe' width = '50px'>\
+        <h4>Organization Name</h4>\
+        <p>Here is information about this wonderful organization</p>\
+        <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
+        </div>\
+        <button id = 'rematch'>REMATCH</button></div>\
+        ");
+}
+})
+});
+$(".homebutton").click(function(){
+ $.ajax({	    
+   success: function(){
+     $("#content").html("Welcome to the Home page!");
+   }
+ })
+});
+$(".aboutbutton").click(function(){
+ $.ajax({	    
+   success: function(){
+     $("#content").html("Welcome to the About!");
+   }
+ })
+});
+});
+$(".contactbutton").click(function(){
+  $.ajax({
+   success: function(){
+     $("#content").html("Welcome to the Contact page!");
+   }
+ });
+});
+      // Reference: http://stackoverflow.com/questions/17206805/jquery-does-not-work-on-ajax-generated-html
+      // Reference: http://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content
+
+
+
+
+
       var mylink = "itemsPopUp.html";
       var windowname = "Bob";
       var mylink2 = "preview.html";
       var windowname2 = "Preview";
       function popup(mylink, windowname) { 
-	    console.log("hey");
-	    if (! window.focus)return true; 
-	    var href;
-	    if (typeof(mylink) == 'string') 
-	      href=mylink;
-	    else 
-	      href=mylink.href; 
-	    window.open(href, windowname, 'width=400,height=200,scrollbars=yes'); 
-	    return false; 
-  	}
-    </script>
-  </body>
-</html>
+       console.log("hey");
+       if (! window.focus)return true; 
+       var href;
+       if (typeof(mylink) == 'string') 
+         href=mylink;
+       else 
+         href=mylink.href; 
+       window.open(href, windowname, 'width=400,height=200,scrollbars=yes'); 
+       return false; 
+     }
+     </script>
+   </body>
+   </html>

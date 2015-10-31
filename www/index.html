@@ -96,8 +96,14 @@
       // http://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content
       $("#content").on("click", "#loginButtonOnForm", function(){
         $.ajax({
-          success: function(){
-            $("#content").html("Logged in");
+          url: "cgi-bin/crud.py",
+          type: "POST",
+          dataType: "json",
+          data: {
+            usernameValue: $("#usernameBox").val()
+          },
+          success: function(data){
+            $("#content").html("Logged in"+data.myUsername);
           }
         })
       })

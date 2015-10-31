@@ -91,8 +91,16 @@
           }
         });
       });
-      // Reference: http://stackoverflow.com/questions/17206805/jquery-does-not-work-on-ajax-generated-html
-      // Reference: http://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content
+      // References used to fix issue when jQuery events were not responding for AJAX-generated HTML: 
+      // http://stackoverflow.com/questions/17206805/jquery-does-not-work-on-ajax-generated-html
+      // http://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content
+      $("#content").on("click", "#loginButtonOnForm", function(){
+        $.ajax({
+          success: function(){
+            $("#content").html("Logged in");
+          }
+        })
+      })
       var mylink = "itemsPopUp.html";
       var windowname = "Bob";
       var mylink2 = "preview.html";

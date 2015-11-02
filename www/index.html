@@ -9,7 +9,7 @@
       <div id="login">
         <div class="main">
           <span id="logintext"><a href="#" id="loginbutton">Login</a></span>
-            <span id="signuptext"><a href="#" id="signupbutton">Sign Up</a></span>
+		  <span id="signuptext"><a href="#" id="signupbutton">Sign Up</a></span>
         </div>
       </div>
       <header>
@@ -42,7 +42,7 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-      	$("#signupbutton").click(function(){
+		  $("#signupbutton").click(function(){
       	   $.ajax({
             success: function(){
               $("#content").html("\
@@ -53,7 +53,8 @@
 		");
 		}
 		})
-      	});
+      	});  
+		  
 	$("#loginbutton").click(function(){
           $.ajax({
             success: function(){
@@ -113,14 +114,17 @@
           type: "POST",
           dataType: "json",
           data: {
-            usernameValue: $("#usernameBox").val()
+            usernameValue: $("#usernameBox").val(),
+			passwordValue: $("#passwordBox").val(),
+			zipcodeValue: 999999 //just to make it work, never used
           },
           success: function(data){
-            $("#content").html("Logged in"+data.myUsername);
+            $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
           }
         })
-      })
-      $("#content").on("click", "signupButton", function(){
+      });
+	  
+	   $("#content").on("click", "#signup", function(){
       	$.ajax({
       	  url: "cgi-bin/crud.py",
           type: "POST",
@@ -128,13 +132,15 @@
           data: {
              usernameValue: $("#user_name").val(),
              passwordValue: $("#user_password").val(),
-             zipcodeValue: $("#user_zip").value
+			 zipcodeValue: $("#user_zip").val()
       	},
       	success: function(data){
-            $("#content").html("Signed Up: "+data.myUsername);
+			console.log("signup")
+            $("#content").html("Signed Up: "+data.myUsername + "password" +data.myPassword + "zip: " + data.myZip);
           }
-      	)
-      })
+      	})
+      });
+	  
       var mylink = "itemsPopUp.html";
       var windowname = "Bob";
       var mylink2 = "preview.html";

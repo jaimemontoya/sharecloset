@@ -9,6 +9,7 @@
       <div id="login">
         <div class="main">
           <span id="logintext"><a href="#" id="loginbutton">Login</a></span>
+            <span id="signuptext"><a href="#" id="signupbutton">Sign Up</a></span>
         </div>
       </div>
       <header>
@@ -41,6 +42,15 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
+      	$("#signupbutton").click(function(){
+      	   $.ajax({
+            success: function(){
+              $("#content").html("\
+              	<div>Username: <input id="user_name" type="text" size="30" /></div>\
+		<div>Password: <input id="user_password" type="password" size="30" /></div>\
+		<div>Zipcode: <input id="user_zip" type="number" size="30" /></div>\
+		<div><button id='signup'>Sign Up</button></div>\
+		      	})
 	$("#loginbutton").click(function(){
           $.ajax({
             success: function(){
@@ -106,6 +116,21 @@
             $("#content").html("Logged in"+data.myUsername);
           }
         })
+      })
+      $("#content").on("click", "signupButton", function(){
+      	$.ajax({
+      	  url: "cgi-bin/crud.py",
+          type: "POST",
+          dataType: "json",
+          data: {
+             usernameValue: $("#user_name").val(),
+             passwordValue: $("#user_password").val(),
+             zipcodeValue: $("#user_zip").value
+      	},
+      	success: function(data){
+            $("#content").html("Signed Up: "+data.myUsername);
+          }
+      	)
       })
       var mylink = "itemsPopUp.html";
       var windowname = "Bob";

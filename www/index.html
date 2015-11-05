@@ -64,22 +64,23 @@
                   <div>Password: <input id='passwordBox' type='password' size='20' /></div>\
                   <div><button id='loginButtonOnForm'>Login</button></div>\
                 </div>\
-                <div id='leftCol' style='float: left; width: 30%; background-color:#b0c4de; height: 400px;'>\
-                  <h1>my items</h1>\
-                  <p> this is a test</p>\
-                  <button id='update' onclick='popup(mylink, windowname)'>UPDATE</button>\
-                </div>\
-                <div id='rightCol' style='float: right; width: 70%; background-color:red; height:400px'>\
-                <h1>my matches</h1>\
-                <p> this is div 2</p>\
-                <div id = 'item1' style='float:left; width =30%; background-color:yellow; height: 200px;'>\
-                  <img src='elephant.jpe' width = '50px'>\
-                  <h4>Organization Name</h4>\
-                  <p>Here is information about this wonderful organization</p>\
-                  <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
-                </div>\
-                <button id = 'rematch'>REMATCH</button></div>\
-              ");
+                ");
+              //   <div id='leftCol' style='float: left; width: 30%; background-color:white; height: 400px;'>\
+              //     <h1>my items</h1>\
+              //     <p> this is a test</p>\
+              //     <button id='update' onclick='popup(mylink, windowname)'>UPDATE</button>\
+              //   </div>\
+              //   <div id='rightCol' style='float: right; width: 70%; background-color:gray; height:400px'>\
+              //   <h1>my matches</h1>\
+              //   <p> this is div 2</p>\
+              //   <div id = 'item1' style='float:left; width =30%; background-color:blue; height: 200px;'>\
+              //     <img src='elephant.jpe' width = '50px'>\
+              //     <h4>Organization Name</h4>\
+              //     <p>Here is information about this wonderful organization</p>\
+              //     <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
+              //   </div>\
+              //   <button id = 'rematch'>REMATCH</button></div>\
+              // ");
             }
           })
         });
@@ -109,17 +110,39 @@
       // http://stackoverflow.com/questions/17206805/jquery-does-not-work-on-ajax-generated-html
       // http://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content
       $("#content").on("click", "#loginButtonOnForm", function(){
+         console.log("running!")
         $.ajax({
-          url: "cgi-bin/crud.py",
-          type: "POST",
-          dataType: "json",
+          url: "cgi-bin/log.py",
           data: {
-            usernameValue: $("#usernameBox").val(),
-			passwordValue: $("#passwordBox").val(),
-			zipcodeValue: 999999 //just to make it work, never used
+          usernameValue: $("#usernameBox").val(),
+          passwordValue: $("#passwordBox").val(),
+          // zipcodeValue: 999999 //just to make it work, never used
           },
+          type: "GET",
+          dataType: "json",
+         
           success: function(data){
-            $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
+            // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
+             $("#content").html("Welcome "+ data.myUsername+"!"+"\
+                <div id='leftCol' style='float: left; width: 30%; background-color:white; height: 400px;'>\
+                  <h1>my items</h1>\
+                  <p> this is a test</p>\
+                  <button id='update' onclick='popup(mylink, windowname)'>UPDATE</button>\
+                </div>\
+                <div id='rightCol' style='float: right; width: 70%; background-color:gray; height:400px'>\
+                <h1>my matches</h1>\
+                <p> this is div 2</p>\
+                <div id = 'item1' style='float:left; width =30%; background-color:blue; height: 200px;'>\
+                  <img src='elephant.jpe' width = '50px'>\
+                  <h4>Organization Name</h4>\
+                  <p>Here is information about this wonderful organization</p>\
+                  <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
+                </div>\
+                <button id = 'rematch'>REMATCH</button></div>\
+              ");
+          }, 
+          error: function(){
+             $("#content").html("Not Found!");
           }
         })
       });
@@ -130,13 +153,13 @@
           type: "POST",
           dataType: "json",
           data: {
-             usernameValue: $("#user_name").val(),
-             passwordValue: $("#user_password").val(),
-			 zipcodeValue: $("#user_zip").val()
+          usernameValue: $("#user_name").val(),
+          passwordValue: $("#user_password").val(),
+			    zipcodeValue: $("#user_zip").val()
       	},
       	success: function(data){
 			console.log("signup")
-            $("#content").html("Signed Up: "+data.myUsername + "password" +data.myPassword + "zip: " + data.myZip);
+            $("#content").html("Signed Up");
           }
       	})
       });

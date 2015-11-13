@@ -13,6 +13,7 @@ header{clear: both; width: 100%; background: #fff; padding: 0 0 120px 0}
 #headermenu li a{display: block}
 #headermenu a{color: #000; text-decoration: none; text-transform: uppercase}
 #headermenu a:hover{color: #fab10d}
+#content{overflow: auto}
 footer{background: #000}
 #footermenu{float: right; margin: 0}
 #footermenu li{list-style: none; font-weight: bold; float: left; padding: 48px 20px}

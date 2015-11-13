@@ -9,7 +9,7 @@
       <div id="login">
         <div class="main">
           <span id="logintext"><a href="#" id="loginbutton">Login</a></span>
-		  <span id="signuptext"><a href="#" id="signupbutton">Sign Up</a></span>
+      <span id="signuptext"><a href="#" id="signupbutton">Sign Up</a></span>
         </div>
       </div>
       <header>
@@ -42,20 +42,20 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-		  $("#signupbutton").click(function(){
-      	   $.ajax({
+      $("#signupbutton").click(function(){
+           $.ajax({
             success: function(){
               $("#content").html("\
-              	<div>Username: <input id='user_name' type='text' size='30' /></div>\
-		<div>Password: <input id='user_password' type='password' size='30' /></div>\
-		<div>Zipcode: <input id='user_zip' type='number' size='30' /></div>\
-		<div><button id='signup'>Sign Up</button></div>\
-		");
-		}
-		})
-      	});  
-		  
-	$("#loginbutton").click(function(){
+                <div>Username: <input id='user_name' type='text' size='30' /></div>\
+    <div>Password: <input id='user_password' type='password' size='30' /></div>\
+    <div>Zipcode: <input id='user_zip' type='number' size='30' /></div>\
+    <div><button id='signup'>Sign Up</button></div>\
+    ");
+    }
+    })
+        });  
+      
+  $("#loginbutton").click(function(){
           $.ajax({
             success: function(){
               $("#content").html("\
@@ -85,14 +85,14 @@
           })
         });
         $(".homebutton").click(function(){
-          $.ajax({	    
+          $.ajax({      
             success: function(){
               $("#content").html("Welcome to the Home page!");
             }
           })
         });
         $(".aboutbutton").click(function(){
-          $.ajax({	    
+          $.ajax({      
             success: function(){
               $("#content").html("Welcome to the About!");
             }
@@ -113,6 +113,7 @@
          console.log("running!")
         $.ajax({
           url: "cgi-bin/log.py",
+          // Data that will be sent as an input to the log.py script.
           data: {
           usernameValue: $("#usernameBox").val(),
           passwordValue: $("#passwordBox").val(),
@@ -125,9 +126,10 @@
             // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
              $("#content").html("Welcome "+ data.myUsername+"!"+"\
                 <div id='leftCol' style='float: left; width: 30%; background-color:white; height: 400px;'>\
-                  <h1>my items</h1>\
+                  <h1>My donations</h1>\
                   <p> this is a test</p>\
-                  <button id='update' onclick='popup(mylink, windowname)'>UPDATE</button>\
+                  <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
+                  <div id='donateitems'></div>\
                 </div>\
                 <div id='rightCol' style='float: right; width: 70%; background-color:gray; height:400px'>\
                 <h1>my matches</h1>\
@@ -146,24 +148,87 @@
           }
         })
       });
-	  
-	   $("#content").on("click", "#signup", function(){
-      	$.ajax({
-      	  url: "cgi-bin/crud.py",
+      $("#content").on("click", "#update", function(){
+        $.ajax({
+          url: "cgi-bin/gettypes.py",
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            var count = Object.keys(data).length;
+            var selectoptiontype = '';
+            for (var number = 0; number < count; number++){
+              selectoptiontype += "<option value="+number+">"+number+"</option>";
+            }
+            $("#donateitems").html("\
+              <div>\
+                <span>Type:</span>\
+                <select id='selecttype'>\
+                  <option value='0'>[Select type]</option>\
+                  "+selectoptiontype+"\
+                </select>\
+              </div>\
+              <div>\
+                <span>Subtype:</span>\
+                <span id='spanselectsubtype'></span>\
+              </div>\
+              <div>\
+                <span>Quantity:</span>\
+                <input id='quantityinput' type='text' size='10' />\
+              </div>\
+              <div><button id='donateitembutton'>Donate item</button></div>\
+            ");            
+          }
+        })     
+      });
+      $("#content").on("change", "#selecttype", function(){
+        $.ajax({
+          success: function(){
+            //console.log("Congratulations brother."+$("#selecttype").val());
+            var selectoptionsubtype = '';
+            for (var number = 0; number < 3; number++){
+              selectoptionsubtype += "<option value=0"+number+">0"+$("#selecttype").val()+"</option>";
+            }
+            $("#spanselectsubtype").html("\
+              <select id='selectsubtype'>\
+                <option value='0'>[Select type]</option>\
+                "+selectoptionsubtype+"\
+              </select>\
+            ");
+          }
+        })
+      });
+      $("#content").on("click", "#donateitembutton", function(){
+        $.ajax({
+          url: "cgi-bin/donate.py",
+          type: "POST",
+          dataType: "json",
+          data: {
+            itemidValue: $("#selectsubtype").val(),
+            quantityValue: $("#quantityinput").val()
+          },
+          success: function(data){
+            $("#donateitems").html("Thank you for your donation!"+$("#selecttype").val()+" "+$("#selectsubtype").val()+" "+$("#quantityinput").val()+data);
+          }
+        })
+      });
+
+     $("#content").on("click", "#signup", function(){
+        $.ajax({
+          url: "cgi-bin/crud.py",
           type: "POST",
           dataType: "json",
           data: {
           usernameValue: $("#user_name").val(),
           passwordValue: $("#user_password").val(),
-			    zipcodeValue: $("#user_zip").val()
-      	},
-      	success: function(data){
-			console.log("signup")
+          zipcodeValue: $("#user_zip").val()
+        },
+        success: function(data){
+      console.log("signup")
             $("#content").html("Signed Up");
           }
-      	})
+        })
       });
-	  
+    
       var mylink = "addItems.html";
       var windowname = "Bob";
       var mylink2 = "preview.html";

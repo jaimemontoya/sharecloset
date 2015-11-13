@@ -157,8 +157,12 @@
             var count = Object.keys(data).length;
             var selectoptiontype = '';
             for (var number = 0; number < count; number++){
-              selectoptiontype += "<option value="+number+">"+number+"</option>";
+              //selectoptiontype += "<option value="+number+">"+data[1]+"</option>";
             }
+            $.each(data, function(key, value){
+              //console.log("Key: "+key+" Value:"+value);
+              selectoptiontype += "<option value="+key+">"+value+"</option>";
+            });
             $("#donateitems").html("\
               <div>\
                 <span>Type:</span>\

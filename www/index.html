@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Kite%20One">    
   </head>
   <body>
+    <input id='hiddenbox_delete' type='hidden' />
     <div id="base">
       <div id="login">
         <div class="main">
@@ -125,13 +126,13 @@
           success: function(data){
             // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
              $("#content").html("Welcome "+ data.myUsername+"!"+"\
-                <div id='leftCol' style='float: left; width: 30%; background-color:white; height: 400px;'>\
+                <div id='leftCol' style='float: left; width: 30%; '>\
                   <h1>My donations</h1>\
-                  <p> this is a test</p>\
+                  <div id='mydonationslist'>"+updatemydonations()+"</div>\
                   <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
                   <div id='donateitems'></div>\
                 </div>\
-                <div id='rightCol' style='float: right; width: 70%; background-color:gray; height:400px'>\
+                <div id='rightCol' style='float: right; width: 70%; '>\
                 <h1>my matches</h1>\
                 <p> this is div 2</p>\
                 <div id = 'item1' style='float:left; width =30%; background-color:blue; height: 200px;'>\
@@ -172,8 +173,12 @@
                 </select>\
               </div>\
               <div>\
-                <span>Subtype:</span>\
+                <span>Item:</span>\
                 <span id='spanselectsubtype'></span>\
+              </div>\
+              <div>\
+                <span>Description:</span>\
+                <input id='descriptioninput' type='text' size='100' />\
               </div>\
               <div>\
                 <span>Quantity:</span>\
@@ -186,12 +191,23 @@
       });
       $("#content").on("change", "#selecttype", function(){
         $.ajax({
-          success: function(){
+          url: "cgi-bin/getsubtypes.py",
+          // Data that will be sent as an input to the log.py script.
+          data: {
+          selecttypeValue: $("#selecttype").val()
+          // zipcodeValue: 999999 //just to make it work, never used
+          },
+          type: "GET",
+          dataType: "json",
+          success: function(data){
             //console.log("Congratulations brother."+$("#selecttype").val());
             var selectoptionsubtype = '';
             for (var number = 0; number < 3; number++){
-              selectoptionsubtype += "<option value=0"+number+">0"+$("#selecttype").val()+"</option>";
+              //selectoptionsubtype += "<option value=0"+number+">0"+$("#selecttype").val()+"</option>";
             }
+            $.each(data, function(key, value){
+              selectoptionsubtype += "<option value="+key+">"+value+"</option>";
+            });
             $("#spanselectsubtype").html("\
               <select id='selectsubtype'>\
                 <option value='0'>[Select type]</option>\
@@ -201,6 +217,47 @@
           }
         })
       });
+
+
+      function updatemydonations(){
+        //console.log("Just testing");
+        $.ajax({
+          url: "cgi-bin/listmydonations.py",
+          // Data that will be sent as an input to the log.py script.
+          data: {
+          // Get it from the session (cookies or localStorage).
+          usernameValue: 'jaimemontoya',
+          },
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log("This must work.");
+            /*$.each(data, function(key, value){
+              $("#mydonationslist").html("Printing donations right now."+key+" "+value.description);
+            });*/
+            //console.log(data);
+            var count = Object.keys(data).length;
+            console.log(count);
+            var lielements = '<table><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
+            for (var number = 0; number < count; number++){
+              //selectoptiontype += "<option value="+number+">"+data[1]+"</option>";
+              var user_donationsid = data[number]["user_donationsid"];
+              var itemname = data[number]["itemname"];
+              var description = data[number]["description"];
+              var quantity = data[number]["quantity"];
+              
+
+              lielements += "<tr><td>"+itemname+"</td><td>"+description+"</td><td>"+quantity+"</td><td><a href='link.py&idtodelete="+user_donationsid+"'>Delete</td></tr>";
+
+            }
+            lielements += '</table>';
+            $("#mydonationslist").html(lielements);
+          }
+        })
+      }
+
+
+
       $("#content").on("click", "#donateitembutton", function(){
         $.ajax({
           url: "cgi-bin/donate.py",
@@ -208,14 +265,21 @@
           dataType: "json",
           data: {
             itemidValue: $("#selectsubtype").val(),
+            descriptionValue: $("#descriptioninput").val(),
             quantityValue: $("#quantityinput").val()
           },
           success: function(data){
-            $("#donateitems").html("Thank you for your donation!"+$("#selecttype").val()+" "+$("#selectsubtype").val()+" "+$("#quantityinput").val()+data);
+            //$("#donateitems").html("Thank you for your donation!"+$("#selecttype").val()+" "+$("#selectsubtype").val()+" "+$("#quantityinput").val()+data);
+            updatemydonations();
           }
-        })
+        });
+        $.ajax({
+          success: function(){
+            //console.log("This is a message from AJAX.");            
+            $("#mydonationslist").html("<ul><li>Item 1</li><li>Item 2</li></ul>");
+          }
+        });
       });
-
      $("#content").on("click", "#signup", function(){
         $.ajax({
           url: "cgi-bin/crud.py",

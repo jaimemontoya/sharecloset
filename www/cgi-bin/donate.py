@@ -9,6 +9,7 @@ print # don't forget the extra newline
 import cgi
 form = cgi.FieldStorage()
 itemidVal = form['itemidValue'].value
+descriptionVal = form['descriptionValue'].value
 quantityVal = form['quantityValue'].value
 
 import sqlite3
@@ -18,7 +19,7 @@ c = conn.cursor()
 import json
 
 data = {}
-c.execute('INSERT INTO user_donation (username, itemid, quantity) VALUES (?, ?, ?)', ('jaimemontoya', itemidVal, quantityVal))
+c.execute('INSERT INTO user_donation (username, itemid, description, quantity) VALUES (?, ?, ?, ?)', ('jaimemontoya', itemidVal, descriptionVal, quantityVal))
 data = "Donation completed!"
 
 conn.commit()

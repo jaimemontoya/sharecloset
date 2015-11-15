@@ -50,7 +50,7 @@ c.execute('INSERT INTO type(typeid, typename) VALUES (2, "Furniture")')
 c.execute('INSERT INTO type(typeid, typename) VALUES (3, "Toys")')
 
 # Creating a table called 'user_donation'
-c.execute('CREATE TABLE user_donation(user_donationsid integer primary key autoincrement, username varchar(10), itemid integer, quantity integer, timestamp not null default current_timestamp)')
+c.execute('CREATE TABLE user_donation(user_donationsid integer primary key autoincrement, username varchar(10), itemid integer, description varchar(100), quantity integer, timestamp not null default current_timestamp)')
 
 # Creating a table called 'organization'
 c.execute('CREATE TABLE organization(organizationid integer primary key, organizationname varchar(30), zipcode integer)')	

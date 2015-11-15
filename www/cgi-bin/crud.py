@@ -1,4 +1,4 @@
-#!"C:\Python27\python.exe"
+#!/usr/bin/env python
 # print the http header
 #stuff from lecture4.py
 
@@ -36,4 +36,4 @@ else:
 	c.execute('insert into users values (?, ?, ?)', (userValue, passwordVal, zipVal))
 
 conn.commit()
-print json.dumps(data)	
+print json.dumps(data)

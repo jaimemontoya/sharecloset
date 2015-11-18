@@ -1,4 +1,29 @@
 $(document).ready(function(){
+  // The value will be null if the user has not logged in.
+  if (localStorage.getItem("userloggedin") === null) {
+    //console.log("NOT logged in.");
+  }else{
+    //console.log("LOGGED IN successfully.");
+    $("#loginbutton").html("Logout");
+    $("#content").html("\
+        <div id='leftCol' style='float: left; width: 30%; '>\
+          <h1>My donations</h1>\
+          <div id='mydonationslist'>"+updatemydonations()+"</div>\
+          <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
+          <div id='donateitems'></div>\
+        </div>\
+        <div id='rightCol' style='float: right; width: 70%; '>\
+          <h1>my matches</h1>\
+          <p> this is div 2</p>\
+          <div id = 'item1' style='float:left; width =30%'>\
+            <img src='elephant.jpe' width = '50px'>\
+            <h4>Organization Name</h4>\
+            <p>Here is information about this wonderful organization</p>\
+            <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
+          </div>\
+          <button id = 'rematch'>REMATCH</button></div>\
+        ");
+  }
   $("#signupbutton").click(function(){
     $.ajax({
       success: function(){
@@ -12,6 +37,10 @@ $(document).ready(function(){
     })
   });  
   $("#loginbutton").click(function(){
+    if($("#loginbutton").text() == 'Logout'){
+      localStorage.removeItem("userloggedin");
+      $("#loginbutton").html("Login");
+    }
     $.ajax({
       success: function(){
         $("#content").html("\
@@ -60,7 +89,9 @@ $(document).ready(function(){
       type: "GET",
       dataType: "json",
       success: function(data){
+        localStorage['userloggedin'] = data.myUsername;
         // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
+        $("#loginbutton").html("Logout");
         $("#content").html("Welcome "+ data.myUsername+"!"+"\
         <div id='leftCol' style='float: left; width: 30%; '>\
           <h1>My donations</h1>\
@@ -78,7 +109,7 @@ $(document).ready(function(){
             <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
           </div>\
           <button id = 'rematch'>REMATCH</button></div>\
-        ");
+        ");        
       }, 
       error: function(){
         $("#content").html("Not Found!");
@@ -157,8 +188,9 @@ $(document).ready(function(){
       url: "cgi-bin/listmydonations.py",
       // Data that will be sent as an input to the log.py script.
       data: {
-        // Get it from the session (cookies or localStorage).
-        usernameValue: 'jaimemontoya',
+        // Get it from the session (cookies or localStorage).        
+        //usernameValue: 'jaimemontoya',
+        usernameValue: localStorage.getItem("userloggedin")
       },
       type: "GET",
       dataType: "json",
@@ -202,6 +234,7 @@ $(document).ready(function(){
       type: "POST",
       dataType: "json",
       data: {
+        usernameValue: localStorage.getItem("userloggedin"),
         itemidValue: $("#selectsubtype").val(),
         descriptionValue: $("#descriptioninput").val(),
         quantityValue: $("#quantityinput").val()

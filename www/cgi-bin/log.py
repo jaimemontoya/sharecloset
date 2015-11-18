@@ -25,10 +25,8 @@ data = {}
 #for r in c.execute('select username from users where username="emichel2";'):
 #	data = r
 #data['myUsername'] = "Not found"
-
-for r in c.execute('select * from users where username=? AND password=?;',[requestedUser,requestedPass]):	
+for r in c.execute('select * from users where username=? AND password=?;',[requestedUser,requestedPass]):
 	name = r[0]
-
 	data['myUsername'] = name
 	print json.dumps(data)
 

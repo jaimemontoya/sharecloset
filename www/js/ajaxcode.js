@@ -105,21 +105,36 @@ $(document).ready(function(){
           <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
         ");      
 
-        /*div used to be...
-        <div id = 'mymatcheslist' style='float:left; width =30%'>\
-            <img src='elephant.jpe' width = '50px'>\
-            <h4>Organization Name</h4>\
-            <p>Here is information about this wonderful organization</p>\
-            <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
-          </div>\
-          */
-
       }, 
       error: function(){
         $("#content").html("Not Found!");
       }
     })
   });
+
+  $(".profilebutton").click(function(){
+      console.log("profile fcn called" + localStorage['userloggedin']);   
+        if (localStorage['userloggedin'] == null){
+          console.log("inside if");
+      $("#content").html("<p>Sign up, Login, or get out. K thanks.</p>");  
+        } else {
+          console.log("in else");
+        $("#loginbutton").html("Logout");
+        $("#content").html("Welcome "+ localStorage.getItem("userloggedin")+"!"+"\
+        <div id='leftCol' style='float: left; width: 30%; '>\
+          <h1>My donations</h1>\
+          <div id='mydonationslist'>"+updatemydonations()+"</div>\
+          <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
+          <div id='donateitems'></div>\
+        </div>\
+        <div id='rightCol' style='float: right; width: 70%; '>\
+          <h1>my matches</h1>\
+          <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
+        "); 
+        }     
+    });
+
+
   $("#content").on("click", "#update", function(){
     $.ajax({
       url: "cgi-bin/gettypes.py",
@@ -248,8 +263,6 @@ $(document).ready(function(){
       }
     })
   };
-
-
 
   // Solution to delete entry found at http://stackoverflow.com/questions/31644525/delete-entry-from-database-using-ajax-and-jquery.
   $("#content").on("click", ".deletedonationbutton", function(){

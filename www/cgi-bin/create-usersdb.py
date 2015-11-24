@@ -1,3 +1,4 @@
+#!"C:\Python27\python.exe"
 #modeled from https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4-create-database.py
 
 import sqlite3
@@ -29,7 +30,7 @@ c.execute("insert into users values('bobram8', '92798@!', 14043);")
 #c.execute("insert into items values('stargirl27','toys','dress-up clothes',1);")
 #c.execute("insert into items values('bobram8','furniture','couch',1);")
 
-# Creating a table called 'item'.
+# Creating a table called 'item'. 
 c.execute('CREATE TABLE item(itemid integer primary key, itemname varchar(30), itemtypeid integer)')
 # Populating the table 'item'
 c.execute('INSERT INTO item(itemid, itemname, itemtypeid) VALUES (1, "Shirt", 1)')
@@ -53,10 +54,30 @@ c.execute('INSERT INTO type(typeid, typename) VALUES (3, "Toys")')
 c.execute('CREATE TABLE user_donation(user_donationsid integer primary key autoincrement, username varchar(10), itemid integer, description varchar(100), quantity integer, timestamp not null default current_timestamp)')
 
 # Creating a table called 'organization'
-c.execute('CREATE TABLE organization(organizationid integer primary key, organizationname varchar(30), zipcode integer)')	
+c.execute('CREATE TABLE organization(organizationid integer primary key, organizationname varchar(30), zipcode integer)')
+#filling in some values for now- double check if zipcodes are accurate. 
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (1,"Goodwill", 14627)')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (2,"Ronald McDonald House", 14627)')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (3,"Hilliside Family of Agencies", 14627)')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (4,"Foodlink Food Bank", 14627)')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (5,"Amvets", 14225)')
+
+#key of item id's 
+#1, "Shirt" #2, "Pants"#3, "Shoes" #4, "Bed" #5, "Table" #6, "Desk" #7, "Board game" #8, "Video game" #9, "Doll"
 
 # Creating a table called 'item_organization'
-c.execute('CREATE TABLE item_organization(organizationid integer primary key, organizationname varchar(30), zipcode integer)')
+#gen_id is similar to user_donationsid in user_donation table
+c.execute('CREATE TABLE item_organization(gen_id integer primary key autoincrement, org_id integer, org_itemid integer)')
+#filling in for now
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (1,1)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (1,2)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (1,3)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (2,4)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (2,7)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (3,1)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (5,1)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (5,2)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (5,3)')
 
 conn.commit()
 conn.close()

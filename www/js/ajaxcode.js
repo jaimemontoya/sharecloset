@@ -14,15 +14,16 @@ $(document).ready(function(){
         </div>\
         <div id='rightCol' style='float: right; width: 70%; '>\
           <h1>my matches</h1>\
-          <p> this is div 2</p>\
-          <div id = 'item1' style='float:left; width =30%'>\
+          <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
+        ");
+  /* what this div used to be
+         <div id = 'mymatcheslist' style='float:left; width =30%'>\
             <img src='elephant.jpe' width = '50px'>\
             <h4>Organization Name</h4>\
             <p>Here is information about this wonderful organization</p>\
             <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
-          </div>\
-          <button id = 'rematch'>REMATCH</button></div>\
-        ");
+          </div>\ 
+          <button id = 'rematch'>REMATCH</button></div>\*/
   }
   $("#signupbutton").click(function(){
     $.ajax({
@@ -101,15 +102,18 @@ $(document).ready(function(){
         </div>\
         <div id='rightCol' style='float: right; width: 70%; '>\
           <h1>my matches</h1>\
-          <p> this is div 2</p>\
-          <div id = 'item1' style='float:left; width =30%'>\
+          <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
+        ");      
+
+        /*div used to be...
+        <div id = 'mymatcheslist' style='float:left; width =30%'>\
             <img src='elephant.jpe' width = '50px'>\
             <h4>Organization Name</h4>\
             <p>Here is information about this wonderful organization</p>\
             <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
           </div>\
-          <button id = 'rematch'>REMATCH</button></div>\
-        ");        
+          */
+
       }, 
       error: function(){
         $("#content").html("Not Found!");
@@ -122,6 +126,7 @@ $(document).ready(function(){
       type: "GET",
       dataType: "json",
       success: function(data){
+        $("#donateitems").show();
         var count = Object.keys(data).length;
         var selectoptiontype = '';
         for (var number = 0; number < count; number++){
@@ -145,7 +150,7 @@ $(document).ready(function(){
         </div>\
         <div>\
           <span>Description:</span>\
-          <input id='descriptioninput' type='text' size='40' />\
+          <input id='descriptioninput' type='text' size='20' />\
         </div>\
         <div>\
           <span>Quantity:</span>\
@@ -210,6 +215,42 @@ $(document).ready(function(){
       }
     })
   };
+
+  function updatematches(){ //modeled after previous function
+    $.ajax({
+      url: "cgi-bin/match.py",
+      // Data that will be sent as an input to the log.py script.
+      data: {
+        // Get it from the session (cookies or localStorage).        
+        //usernameValue: 'jaimemontoya',
+        usernameValue: localStorage.getItem("userloggedin")
+      },
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        console.log("in suceess of update matches");
+        //START HERE! "org_name"
+        var count = Object.keys(data).length;
+        var orgtable = '<table><tr><th>Organization Name</th></tr>';
+
+        for (var number = 0; number < count; number++){              
+          var orgname = data[number]["org_name"];
+
+          if (orgtable.indexOf(orgname) == -1)
+          { //meaning not already in there- will have to change this if we want to show HOW they match 
+            orgtable += "<tr><td>"+orgname+"</td><td><button class='more'>Tell Me More</button></td></tr>";
+          } 
+        }
+
+        //something with organization ID!!!!
+          orgtable += '</table>';
+        $("#mymatcheslist").html(orgtable);
+      }
+    })
+  };
+
+
+
   // Solution to delete entry found at http://stackoverflow.com/questions/31644525/delete-entry-from-database-using-ajax-and-jquery.
   $("#content").on("click", ".deletedonationbutton", function(){
     // The variable "user_donationsid" will capture the id of the donation that will be deleted.
@@ -225,6 +266,7 @@ $(document).ready(function(){
       success: function(data){
         console.log("Clicked the delete button. The name is: "+data);
         updatemydonations();
+        updatematches();
       }
     })
   });
@@ -241,6 +283,8 @@ $(document).ready(function(){
       },
       success: function(data){
         updatemydonations();
+        updatematches();
+         $("#donateitems").hide();
       }
     });
     $.ajax({
@@ -269,6 +313,7 @@ $(document).ready(function(){
   var windowname = "Bob";
   var mylink2 = "preview.html";
   var windowname2 = "Preview";
+
   function popup(mylink, windowname) { 
     if (! window.focus)return true; 
       var href;

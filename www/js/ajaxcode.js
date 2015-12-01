@@ -2,7 +2,11 @@ $(document).ready(function(){
   // The value will be null if the user has not logged in.
   if (localStorage.getItem("userloggedin") === null) {
     //console.log("NOT logged in.");
+    // Show this button only to authenticated users.
+    $(".profilebutton").hide();
   }else{
+    // Show this button only to authenticated users.
+        $(".profilebutton").show(); 
     //console.log("LOGGED IN successfully.");
     $("#loginbutton").html("Logout");
     $("#content").html("\
@@ -12,28 +16,26 @@ $(document).ready(function(){
           <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
           <div id='donateitems'></div>\
         </div>\
-        <div id='rightCol' style='float: right; width: 70%; '>\
-          <h1>my matches</h1>\
+        <div id='rightCol' style='float: left; width: 30%; '>\
+          <h1>My matches</h1>\
           <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
+          <div id='farRight' style='float:left; width: 40%; '><p>new div</p></div>\
         ");
-  /* what this div used to be
-         <div id = 'mymatcheslist' style='float:left; width =30%'>\
-            <img src='elephant.jpe' width = '50px'>\
-            <h4>Organization Name</h4>\
-            <p>Here is information about this wonderful organization</p>\
-            <button id='preview' onclick='popup(mylink2,windowname2)'>PREVIEW</button>\
-          </div>\ 
-          <button id = 'rematch'>REMATCH</button></div>\*/
+      $("#farRight").hide();  
   }
   $("#signupbutton").click(function(){
     $.ajax({
       success: function(){
         $("#content").html("\
-          <div>Username: <input id='user_name' type='text' size='30' /></div>\
+          <p id='message'>User already exits</p>\
+          <div id='name_div'>Username: <input id='user_name' type='text' size='30' /></div>\
           <div>Password: <input id='user_password' type='password' size='30' /></div>\
-          <div>Zipcode: <input id='user_zip' type='number' size='30' /></div>\
+          <div id='zip_div'>Zipcode: <input id='user_zip' type='number' size='30' title='Invalid ZIP code.' /></div>\
           <div><button id='signup'>Sign Up</button></div>\
         ");
+        $("#signup").button();
+        $("#message").hide();
+
       }
     })
   });  
@@ -41,6 +43,8 @@ $(document).ready(function(){
     if($("#loginbutton").text() == 'Logout'){
       localStorage.removeItem("userloggedin");
       $("#loginbutton").html("Login");
+      // Show this button only to authenticated users.
+     $(".profilebutton").hide();
     }
     $.ajax({
       success: function(){
@@ -51,6 +55,7 @@ $(document).ready(function(){
             <div><button id='loginButtonOnForm'>Login</button></div>\
           </div>\
         ");
+        $("#loginButtonOnForm").button();
       }
     })
   });
@@ -90,6 +95,8 @@ $(document).ready(function(){
       type: "GET",
       dataType: "json",
       success: function(data){
+        // Show this button only to authenticated users.
+        $(".profilebutton").show(); 
         localStorage['userloggedin'] = data.myUsername;
         // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
         $("#loginbutton").html("Logout");
@@ -100,17 +107,20 @@ $(document).ready(function(){
           <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
           <div id='donateitems'></div>\
         </div>\
-        <div id='rightCol' style='float: right; width: 70%; '>\
-          <h1>my matches</h1>\
+        <div id='rightCol' style='float: left; width: 30%; '>\
+          <h1>My matches</h1>\
           <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
-        ");      
-
+        <div id='farRight' style='float:left; width: 40%; '><p>new div</p></div>\
+        ");
+        $("#farRight").hide();  
+        $("#update").button();    
       }, 
       error: function(){
         $("#content").html("Not Found!");
       }
     })
   });
+
 
   $(".profilebutton").click(function(){
       console.log("profile fcn called" + localStorage['userloggedin']);   
@@ -127,10 +137,12 @@ $(document).ready(function(){
           <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
           <div id='donateitems'></div>\
         </div>\
-        <div id='rightCol' style='float: right; width: 70%; '>\
-          <h1>my matches</h1>\
+        <div id='rightCol' style='float: left; width: 30%; '>\
+          <h1>My matches</h1>\
           <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
+          <div id='farRight' style='float:left; width: 40%; '><p>new div</p></div>\
         "); 
+        $("#farRight").hide();  
         }     
     });
 
@@ -173,6 +185,7 @@ $(document).ready(function(){
         </div>\
         <div><button id='donateitembutton'>Donate item</button></div>\
         ");            
+        $("#donateitembutton").button();
       }
     })     
   });
@@ -227,6 +240,9 @@ $(document).ready(function(){
         }
         donationstable += '</table>';
         $("#mydonationslist").html(donationstable);
+        $("#donateitembutton").button();
+        $("#update").button();
+        $(".deletedonationbutton").button();
       }
     })
   };
@@ -243,6 +259,7 @@ $(document).ready(function(){
       type: "GET",
       dataType: "json",
       success: function(data){
+        $("#farRight").hide();//because might be irrelevant or outdated now
         console.log("in suceess of update matches");
         //START HERE! "org_name"
         var count = Object.keys(data).length;
@@ -250,19 +267,78 @@ $(document).ready(function(){
 
         for (var number = 0; number < count; number++){              
           var orgname = data[number]["org_name"];
+          var orgid = data[number]["org_id"];
 
           if (orgtable.indexOf(orgname) == -1)
           { //meaning not already in there- will have to change this if we want to show HOW they match 
-            orgtable += "<tr><td>"+orgname+"</td><td><button class='more'>Tell Me More</button></td></tr>";
+            orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
           } 
         }
 
         //something with organization ID!!!!
           orgtable += '</table>';
         $("#mymatcheslist").html(orgtable);
+        $(".more").button();
       }
     })
   };
+
+
+  // adapted from following .deletedonationbutton function
+  $("#content").on("click", ".more", function(){ //when "Tell me more" is pressed
+    // The variable "user_donationsid" will capture the id of the donation that will be deleted.
+//    console.log("MORE");
+    var organizationid = $(this).attr('id'); 
+  //  console.log(organizationid);
+    $.ajax({
+      url: "cgi-bin/more.py",
+      type: "GET",
+      dataType: "json",
+      data: {
+        usernameValue: localStorage['userloggedin'],
+        organizationidValue: organizationid
+      },
+      success: function(data){
+        console.log("in sucess of more");
+      //  console.log(data[0]["a"]);
+      //  console.log(data[1]["a"]);
+      var count = Object.keys(data).length;
+      //org info in data[0]. matches start in data[1]
+      //"org_name": r[0], "org_photo": r[1], "org_site":r[2], "org_address": r[3], "org_zip": r[4]}
+      var org_name = data[0]["org_name"];
+      var org_photo = data[0]["org_photo"]; //amvets.jpg or something
+      var org_site = data[0]["org_site"];
+      var org_address = data[0]["org_address"];
+      var org_zip = data[0]["org_zip"];
+      console.log(org_address + " " + org_zip);
+      //http://stackoverflow.com/questions/15551779/open-link-in-new-tab
+      //http://www.sitepoint.com/web-foundations/href-html-attribute/
+      var temp = '<img src = "photos/'+org_photo+'" height = "50" width = "50"><h3>Information about '+org_name+'\
+      <button id = "hide">hide</button></h3><a target= "_blank" href="' +org_site+'">Organization site</a><h4>Address: '+org_address+' Zipcode: ' +org_zip+'</h4><h4>Matches:</h4><ul>';
+        for (var number = 1; number < count; number++){  
+          var itemname = data[number]["itemname"];
+         if (temp.indexOf(itemname) == -1)
+          { //meaning not already in there
+            temp+="<li>"+itemname+"</li>";
+          }
+        }
+        temp+='</ul>';  
+     //   console.log(temp);
+        $("#farRight").html(temp);
+        $("#farRight").show(); 
+        $("#hide").button();
+      }, error: function(){
+        console.log("error of more");
+      }
+    })
+  });
+
+
+  $("#content").on("click", "#hide", function(){
+    //to hide the additional info provided by "tell me more"
+    $("#farRight").hide();
+  });
+
 
   // Solution to delete entry found at http://stackoverflow.com/questions/31644525/delete-entry-from-database-using-ajax-and-jquery.
   $("#content").on("click", ".deletedonationbutton", function(){
@@ -283,6 +359,7 @@ $(document).ready(function(){
       }
     })
   });
+
   $("#content").on("click", "#donateitembutton", function(){
     $.ajax({
       url: "cgi-bin/donate.py",
@@ -300,14 +377,31 @@ $(document).ready(function(){
          $("#donateitems").hide();
       }
     });
-    $.ajax({
+   /* $.ajax({
       success: function(){
         //console.log("This is a message from AJAX.");            
         $("#mydonationslist").html("<ul><li>Item 1</li><li>Item 2</li></ul>");
       }
-    });
+    }); */
   });
+
+  // Code from http://www.devcurry.com/2010/07/validate-us-zip-code-using-javascript.html
+  function IsValidZipCode(zip) {
+    var isValid = /^[0-9]{5}(?:-[0-9]{4})?$/.test(zip);
+    if (isValid)
+      //Valid ZipCode
+      return 0;
+    else {
+      //Invalid ZipCode
+      return -1;
+    }
+  }
+
   $("#content").on("click", "#signup", function(){
+    //valid zipcode:
+    console.log("SIGNUP clicked");
+    $("#message").hide();
+    if(IsValidZipCode($("#user_zip").val()) == 0){
     $.ajax({
       url: "cgi-bin/crud.py",
       type: "POST",
@@ -318,9 +412,36 @@ $(document).ready(function(){
         zipcodeValue: $("#user_zip").val()
       },
       success: function(data){
-        $("#content").html("Signed Up");
+        if (data=="already there"){
+          console.log("IF");
+           $("#message").show();
+    //      $("#content").html("User already exists");
+       /*     var tooltips = $( "[title]" ).tooltip({
+             position: {
+              my: "left top",
+              at: "right+5 top-5"
+            }
+          });
+            $('*[title]').tooltip('enable');
+         $('#zip_div *[title]').tooltip('disable');
+           tooltips.tooltip("open");  */
+        } else{
+          $("#content").html("Signed Up");
+        }
       }
     })
+  }else{ // Invalid ZIP code.
+      // Code from https://jqueryui.com/tooltip/#forms
+      var tooltips = $( "[title]" ).tooltip({
+      position: {
+        my: "left top",
+        at: "right+5 top-5"
+      }
+    });
+  //    $('*[title]').tooltip('enable');
+   // $('#name_div *[title]').tooltip('disable');
+    tooltips.tooltip( "open" );
+  }
   });
   var mylink = "addItems.html";
   var windowname = "Bob";

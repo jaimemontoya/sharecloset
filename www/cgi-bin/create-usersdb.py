@@ -54,13 +54,15 @@ c.execute('INSERT INTO type(typeid, typename) VALUES (3, "Toys")')
 c.execute('CREATE TABLE user_donation(user_donationsid integer primary key autoincrement, username varchar(10), itemid integer, description varchar(100), quantity integer, timestamp not null default current_timestamp)')
 
 # Creating a table called 'organization'
-c.execute('CREATE TABLE organization(organizationid integer primary key, organizationname varchar(30), zipcode integer)')
+c.execute('CREATE TABLE organization(organizationid integer primary key, organizationname varchar(30), zipcode integer, photo varchar(30), site varchar(100), address varchar(100))') #note: photo is name only!
 #filling in some values for now- double check if zipcodes are accurate. 
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (1,"Goodwill", 14627)')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (2,"Ronald McDonald House", 14627)')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (3,"Hilliside Family of Agencies", 14627)')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (4,"Foodlink Food Bank", 14627)')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode) VALUES (5,"Amvets", 14225)')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (1,"Goodwill", 14627, "goodwill.jpg", "http://www.goodwill.org/", "see website")')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (2,"Ronald McDonald House", 14620, "ronaldmcdonald.jpg", "http://www.rmhc.org/", "333 Westmoreland Dr., Rochester, NY")')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (3,"Hilliside Family of Agencies", 14627, "hillside.jpg", "https://www.hillside.com/","see website")')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (4,"Foodlink Food Bank", 14627, "foodlink.jpg", "http://foodlinkny.org/","see website")')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (5,"Amvets", 14043, "amvets.jpg" , "http://amvetsnsf.org/thrift-stores/", "2900 Walden Avenue, Depew, NY" )')
+
+
 
 #key of item id's 
 #1, "Shirt" #2, "Pants"#3, "Shoes" #4, "Bed" #5, "Table" #6, "Desk" #7, "Board game" #8, "Video game" #9, "Doll"
@@ -78,6 +80,8 @@ c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (3,1)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (5,1)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (5,2)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (5,3)')
+
+#**how specific do we want this to be? subtypes or types? or combination? 
 
 conn.commit()
 conn.close()

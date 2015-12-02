@@ -164,26 +164,28 @@ $(document).ready(function(){
           selectoptiontype += "<option value="+key+">"+value+"</option>";
         });
         $("#donateitems").html("\
+        <div id='donateitemdiv'>\
         <div>\
-          <span>Type:</span>\
+          <label>Type:</label>\
           <select id='selecttype'>\
             <option value='0'>[Select type]</option>\
             "+selectoptiontype+"\
           </select>\
         </div>\
         <div>\
-          <span>Item:</span>\
+          <label>Item:</label>\
           <span id='spanselectsubtype'></span>\
         </div>\
         <div>\
-          <span>Description:</span>\
+          <label>Description:</label>\
           <input id='descriptioninput' type='text' size='20' />\
         </div>\
         <div>\
-          <span>Quantity:</span>\
+          <label>Quantity:</label>\
           <input id='quantityinput' type='text' size='10' />\
         </div>\
         <div><button id='donateitembutton'>Donate item</button></div>\
+        </div>\
         ");            
         $("#donateitembutton").button();
       }
@@ -230,7 +232,10 @@ $(document).ready(function(){
       success: function(data){
         var count = Object.keys(data).length;
         console.log(count);
-        var donationstable = '<table><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
+        // If at least one organization match was found.
+        if(count > 0){
+          var donationstable = '<table class="t01"><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
+        }
         for (var number = 0; number < count; number++){              
           var user_donationsid = data[number]["user_donationsid"];
           var itemname = data[number]["itemname"];
@@ -238,7 +243,10 @@ $(document).ready(function(){
           var quantity = data[number]["quantity"];
           donationstable += "<tr><td>"+itemname+"</td><td>"+description+"</td><td>"+quantity+"</td><td><button class='deletedonationbutton' type='submit' name='"+user_donationsid+"'>Delete</button></td></tr>";
         }
-        donationstable += '</table>';
+        // If at least one organization match was found.
+        if(count > 0){
+          donationstable += '</table>';
+        }
         $("#mydonationslist").html(donationstable);
         $("#donateitembutton").button();
         $("#update").button();
@@ -258,13 +266,15 @@ $(document).ready(function(){
       },
       type: "GET",
       dataType: "json",
-      success: function(data){
+      success: function(data){	
         $("#farRight").hide();//because might be irrelevant or outdated now
         console.log("in suceess of update matches");
         //START HERE! "org_name"
         var count = Object.keys(data).length;
-        var orgtable = '<table><tr><th>Organization Name</th></tr>';
-
+        // If at least one organization match was found.
+        if(count > 0){
+          var orgtable = '<table class="t01"><tr><th>Organization Name</th><th></th></tr>';
+        }
         for (var number = 0; number < count; number++){              
           var orgname = data[number]["org_name"];
           var orgid = data[number]["org_id"];
@@ -274,15 +284,16 @@ $(document).ready(function(){
             orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
           } 
         }
-
-        //something with organization ID!!!!
+        // If at least one organization match was found.
+        if(count > 0){
+          //something with organization ID!!!!
           orgtable += '</table>';
+        }
         $("#mymatcheslist").html(orgtable);
         $(".more").button();
       }
     })
   };
-
 
   // adapted from following .deletedonationbutton function
   $("#content").on("click", ".more", function(){ //when "Tell me more" is pressed
@@ -313,8 +324,8 @@ $(document).ready(function(){
       console.log(org_address + " " + org_zip);
       //http://stackoverflow.com/questions/15551779/open-link-in-new-tab
       //http://www.sitepoint.com/web-foundations/href-html-attribute/
-      var temp = '<img src = "photos/'+org_photo+'" height = "50" width = "50"><h3>Information about '+org_name+'\
-      <button id = "hide">hide</button></h3><a target= "_blank" href="' +org_site+'">Organization site</a><h4>Address: '+org_address+' Zipcode: ' +org_zip+'</h4><h4>Matches:</h4><ul>';
+      var temp = '<h1>Organization</h1><img src = "photos/'+org_photo+'" height = "50" width = "50"><h3>Information about '+org_name+'\
+      <button id = "hide">hide</button></h3><a target= "_blank" href="' +org_site+'">Organization site</a><h4>Address: '+org_address+' Zipcode: ' +org_zip+'</h4><div id="loc">Google Maps Geocoding:<input id="text_address" type="text" size="10" value= "'+org_zip+'"></div><div id="map_canvas"></div><h4>Matches:</h4><ul>';
         for (var number = 1; number < count; number++){  
           var itemname = data[number]["itemname"];
          if (temp.indexOf(itemname) == -1)
@@ -327,6 +338,43 @@ $(document).ready(function(){
         $("#farRight").html(temp);
         $("#farRight").show(); 
         $("#hide").button();
+        // Code for The Google Maps Geocoding API, from http://jsfiddle.net/4QGKq/1/
+      var map;
+      var geocoder;
+      var markers = new Array();
+      var firstLoc;
+
+      function myGeocodeFirst() {
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode( {'address': document.getElementById("text_address").value },
+          function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              firstLoc = results[0].geometry.location;
+              map = new google.maps.Map(document.getElementById("map_canvas"),
+              {
+                center: firstLoc,
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              });
+             
+            } 
+            else {
+              document.getElementById("text_status").value = status;
+            }
+          }
+        );
+      }
+      myGeocodeFirst();
+      
+
+
+
+
+
+
+
+
+
       }, error: function(){
         console.log("error of more");
       }

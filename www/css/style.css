@@ -15,9 +15,25 @@ header{clear: both; width: 100%; background: #fff; padding: 0 0 120px 0}
 #headermenu a:hover{color: #fab10d}
 #content{overflow: auto}
 .ui-button-text-only .ui-button-text{padding: .25em .25em; font-size: 14px}
+#leftCol{width: 300px !important; padding: 0 10px}
+#rightCol{width: 300px !important}
+#farRight{width: 300px !important}
+/* Code for label and input, from http://jsfiddle.net/rQ99r/5/ */
+label{display: inline-block; width: 90px}
+input[type="text"]{display: inline-block; margin-bottom: 5px; margin-left: 5px}
+#donateitemdiv{padding: 12px 0}
+/* Code for table from http://www.w3schools.com/html/tryit.asp?filename=tryhtml_table_id2 */
+table{width:100%; font-size: 14px; margin: 5px 0}
+table, th, td{border: 1px solid black; border-collapse: collapse}
+th, td{padding: 5px; text-align: left}
+table.t01 tr:nth-child(even){background-color: #eee}
+table.t01 tr:nth-child(odd){background-color:#fff}
+table.t01 th{background-color: black; color: white}
+ #map_canvas { height: 250px }
 footer{background: #000}
 #footermenu{float: right; margin: 0}
 #footermenu li{list-style: none; font-weight: bold; float: left; padding: 48px 20px}
 #footermenu li a{display: block}
 #footermenu a{color: #fff; text-decoration: none; text-transform: uppercase}
 #footermenu a:hover{color: #fab10d}
+.ui-button-text-only .ui-button-text{padding: .25em .25em !important}

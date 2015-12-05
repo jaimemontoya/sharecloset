@@ -1,8 +1,10 @@
+#!/usr/bin/env python
 #!"C:\Python27\python.exe"
+
 #looking at other files from this project
 
 print "Content-Type: text/html"
-print # don't forget the extra newline	
+print #don't forget the extra newline	
 
 import cgi
 form = cgi.FieldStorage()

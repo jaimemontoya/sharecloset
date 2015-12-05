@@ -4,9 +4,11 @@ $(document).ready(function(){
     //console.log("NOT logged in.");
     // Show this button only to authenticated users.
     $(".profilebutton").hide();
+    $("#deleteAccButton").hide();
   }else{
     // Show this button only to authenticated users.
         $(".profilebutton").show(); 
+         $("#deleteAccButton").show();
     //console.log("LOGGED IN successfully.");
     $("#loginbutton").html("Logout");
     $("#content").html("\
@@ -45,6 +47,7 @@ $(document).ready(function(){
       $("#loginbutton").html("Login");
       // Show this button only to authenticated users.
      $(".profilebutton").hide();
+     $("#deleteAccButton").hide();
     }
     $.ajax({
       success: function(){
@@ -59,6 +62,20 @@ $(document).ready(function(){
       }
     })
   });
+  $("#deleteAccButton").click(function(){
+    console.log("You tried to delete!");
+    $.ajax({
+      success: function(){
+        $("#content").html("\
+          <div>\
+            <div>Sorry to see you go! By clicking yes, all your data will be delete from Sharitable. Are you sure you want to delete your account?</div>\
+            <div><button id='confirmDelete'>Yes</button></div>\
+          </div>\
+        ");
+        $("#loginButtonOnForm").button();
+      }
+    })
+  });  
   $(".homebutton").click(function(){
     $.ajax({      
       success: function(){
@@ -83,40 +100,32 @@ $(document).ready(function(){
   // References used to fix issue when jQuery events were not responding for AJAX-generated HTML: 
   // http://stackoverflow.com/questions/17206805/jquery-does-not-work-on-ajax-generated-html
   // http://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content
-  $("#content").on("click", "#loginButtonOnForm", function(){
+  $("#content").on("click", "#confirmDelete", function(){
+    console.log("You confirmed delete!");
+     // var user_id = localStorage['userloggedin'];
     $.ajax({
-      url: "cgi-bin/log.py",
-      // Data that will be sent as an input to the log.py script.
-      data: {
-        usernameValue: $("#usernameBox").val(),
-        passwordValue: $("#passwordBox").val(),
-        // zipcodeValue: 999999 //just to make it work, never used
-      },
-      type: "GET",
+      url: "cgi-bin/deleteAccount.py",
+      type: "POST",
       dataType: "json",
+      // Data that will be sent as an input to the deletedonation.py script.
+      data: {
+        user_idValue: localStorage['userloggedin']
+      },
       success: function(data){
-        // Show this button only to authenticated users.
-        $(".profilebutton").show(); 
-        localStorage['userloggedin'] = data.myUsername;
-        // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
-        $("#loginbutton").html("Logout");
-        $("#content").html("Welcome "+ data.myUsername+"!"+"\
-        <div id='leftCol' style='float: left; width: 30%; '>\
-          <h1>My donations</h1>\
-          <div id='mydonationslist'>"+updatemydonations()+"</div>\
-          <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
-          <div id='donateitems'></div>\
-        </div>\
-        <div id='rightCol' style='float: left; width: 30%; '>\
-          <h1>My matches</h1>\
-          <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
-        <div id='farRight' style='float:left; width: 40%; '><p>new div</p></div>\
+        console.log("Clicked the delete button.");
+        $(".profilebutton").hide();
+        $("#deleteAccButton").hide(); 
+
+        $("#content").html("\
+          <div>\
+            <div>Username: <input id='usernameBox' type='text' size='20' /></div>\
+            <div>Password: <input id='passwordBox' type='password' size='20' /></div>\
+            <div><button id='loginButtonOnForm'>Login</button></div>\
+          </div>\
         ");
-        $("#farRight").hide();  
-        $("#update").button();    
-      }, 
+      },
       error: function(){
-        $("#content").html("Not Found!");
+        $("#content").html("CAN'T DELETE!");
       }
     })
   });
@@ -145,6 +154,44 @@ $(document).ready(function(){
         $("#farRight").hide();  
         }     
     });
+ $("#content").on("click", "#loginButtonOnForm", function(){
+    $.ajax({
+      url: "cgi-bin/log.py",
+      // Data that will be sent as an input to the log.py script.
+      data: {
+        usernameValue: $("#usernameBox").val(),
+        passwordValue: $("#passwordBox").val(),
+        // zipcodeValue: 999999 //just to make it work, never used
+      },
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        // Show this button only to authenticated users.
+        $(".profilebutton").show();
+        $("#deleteAccButton").show(); 
+        localStorage['userloggedin'] = data.myUsername;
+        // $("#content").html("Logged in"+data.myUsername + "password" + data.myPassword);
+        $("#loginbutton").html("Logout");
+        $("#content").html("Welcome "+ data.myUsername+"!"+"\
+        <div id='leftCol' style='float: left; width: 30%; '>\
+          <h1>My donations</h1>\
+          <div id='mydonationslist'>"+updatemydonations()+"</div>\
+          <button id='update' onclick='popup(mylink, windowname)'>New donation</button>\
+          <div id='donateitems'></div>\
+        </div>\
+        <div id='rightCol' style='float: left; width: 30%; '>\
+          <h1>My matches</h1>\
+          <div id = 'mymatcheslist' style='float:left; width =30%'>"+updatematches()+"</div></div>\
+        <div id='farRight' style='float:left; width: 40%; '><p>new div</p></div>\
+        ");
+        $("#farRight").hide();  
+        $("#update").button();    
+      }, 
+      error: function(){
+        $("#content").html("Not Found!");
+      }
+    })
+  });
 
 
   $("#content").on("click", "#update", function(){
@@ -164,28 +211,26 @@ $(document).ready(function(){
           selectoptiontype += "<option value="+key+">"+value+"</option>";
         });
         $("#donateitems").html("\
-        <div id='donateitemdiv'>\
         <div>\
-          <label>Type:</label>\
+          <span>Type:</span>\
           <select id='selecttype'>\
             <option value='0'>[Select type]</option>\
             "+selectoptiontype+"\
           </select>\
         </div>\
         <div>\
-          <label>Item:</label>\
+          <span>Item:</span>\
           <span id='spanselectsubtype'></span>\
         </div>\
         <div>\
-          <label>Description:</label>\
+          <span>Description:</span>\
           <input id='descriptioninput' type='text' size='20' />\
         </div>\
         <div>\
-          <label>Quantity:</label>\
+          <span>Quantity:</span>\
           <input id='quantityinput' type='text' size='10' />\
         </div>\
         <div><button id='donateitembutton'>Donate item</button></div>\
-        </div>\
         ");            
         $("#donateitembutton").button();
       }
@@ -232,10 +277,7 @@ $(document).ready(function(){
       success: function(data){
         var count = Object.keys(data).length;
         console.log(count);
-        // If at least one organization match was found.
-        if(count > 0){
-          var donationstable = '<table class="t01"><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
-        }
+        var donationstable = '<table><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
         for (var number = 0; number < count; number++){              
           var user_donationsid = data[number]["user_donationsid"];
           var itemname = data[number]["itemname"];
@@ -243,10 +285,7 @@ $(document).ready(function(){
           var quantity = data[number]["quantity"];
           donationstable += "<tr><td>"+itemname+"</td><td>"+description+"</td><td>"+quantity+"</td><td><button class='deletedonationbutton' type='submit' name='"+user_donationsid+"'>Delete</button></td></tr>";
         }
-        // If at least one organization match was found.
-        if(count > 0){
-          donationstable += '</table>';
-        }
+        donationstable += '</table>';
         $("#mydonationslist").html(donationstable);
         $("#donateitembutton").button();
         $("#update").button();
@@ -266,15 +305,13 @@ $(document).ready(function(){
       },
       type: "GET",
       dataType: "json",
-      success: function(data){	
+      success: function(data){
         $("#farRight").hide();//because might be irrelevant or outdated now
         console.log("in suceess of update matches");
         //START HERE! "org_name"
         var count = Object.keys(data).length;
-        // If at least one organization match was found.
-        if(count > 0){
-          var orgtable = '<table class="t01"><tr><th>Organization Name</th><th></th></tr>';
-        }
+        var orgtable = '<table><tr><th>Organization Name</th></tr>';
+
         for (var number = 0; number < count; number++){              
           var orgname = data[number]["org_name"];
           var orgid = data[number]["org_id"];
@@ -284,18 +321,16 @@ $(document).ready(function(){
             orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
           } 
         }
-        // If at least one organization match was found.
-        if(count > 0){
-          //something with organization ID!!!!
+
+        //something with organization ID!!!!
           orgtable += '</table>';
-        }
         $("#mymatcheslist").html(orgtable);
         $(".more").button();
       }
     })
   };
 
-  // adapted from following .deletedonationbutton function
+ // adapted from following .deletedonationbutton function
   $("#content").on("click", ".more", function(){ //when "Tell me more" is pressed
     // The variable "user_donationsid" will capture the id of the donation that will be deleted.
 //    console.log("MORE");
@@ -380,7 +415,6 @@ $(document).ready(function(){
       }
     })
   });
-
 
   $("#content").on("click", "#hide", function(){
     //to hide the additional info provided by "tell me more"

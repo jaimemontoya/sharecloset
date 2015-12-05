@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#!"C:\Python27\python.exe"
 # print the http header
 #stuff from lecture4.py
 

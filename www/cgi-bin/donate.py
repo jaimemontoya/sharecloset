@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#!"C:\Python27\python.exe"
 # Print the http header
 # Design from https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4.py
 

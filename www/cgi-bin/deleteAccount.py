@@ -9,7 +9,7 @@ print # don't forget the extra newline
 
 import cgi
 form = cgi.FieldStorage()
-user_donationsidVal = form['user_donationsidValue'].value
+user_idVal = form['user_idValue'].value
 
 import sqlite3
 conn = sqlite3.connect('donors.db')
@@ -22,8 +22,9 @@ data = {}
 
 
 #c.execute('INSERT INTO user_donation (username, itemid, description, quantity) VALUES (?, ?, ?, ?)', ('jaimemontoya', itemidVal, descriptionVal, quantityVal))
-c.execute('DELETE FROM user_donation WHERE user_donationsid = ?', [user_donationsidVal])
-data = "Donation deleted successfully."
+c.execute('DELETE FROM users WHERE username = ?', [user_idVal])
+c.execute('DELETE FROM user_donation WHERE username = ?', [user_idVal])
+data = "Account Deleted Successfully."
 #data = user_donationsidVal
 
 conn.commit()

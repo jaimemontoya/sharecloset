@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #!"C:\Python27\python.exe"
 
 # print the http header
@@ -14,6 +13,7 @@ form = cgi.FieldStorage()
 userValue = form['usernameValue'].value
 passwordVal = form['passwordValue'].value 
 zipVal = form['zipcodeValue'].value
+addressVal = form['addressValue'].value
 
 import sqlite3
 conn = sqlite3.connect('donors.db')
@@ -35,7 +35,7 @@ if found == 1:
 	data = "already there"
 else:
 	data = "sucessfully added"
-	c.execute('insert into users values (?, ?, ?)', (userValue, passwordVal, zipVal))
+	c.execute('insert into users values (?, ?, ?, ?)', (userValue, passwordVal, addressVal, zipVal))
 
 conn.commit()
 print json.dumps(data)

@@ -32,6 +32,7 @@ $(document).ready(function(){
           <p id='message'>User already exits</p>\
           <div id='name_div'>Username: <input id='user_name' type='text' size='30' /></div>\
           <div>Password: <input id='user_password' type='password' size='30' /></div>\
+            <div id='address_div'>Address: <input id='user_address' type='text' size='100' /></div>\
           <div id='zip_div'>Zipcode: <input id='user_zip' type='number' size='30' title='Invalid ZIP code.' /></div>\
           <div><button id='signup'>Sign Up</button></div>\
         ");
@@ -311,31 +312,231 @@ $(document).ready(function(){
         //START HERE! "org_name"
         var count = Object.keys(data).length;
         var orgtable = '<table><tr><th>Organization Name</th></tr>';
-
-        for (var number = 0; number < count; number++){              
+        console.log("FIRST " + orgtable);
+        var useraddress = data[0];
+        var userzip = data[1];
+        var addressArray = new Array();
+        var nameArray = new Array();
+        var idArray = new Array();
+        var destination = useraddress + " " + userzip;
+        for (var number = 2; number < count; number++){              
           var orgname = data[number]["org_name"];
           var orgid = data[number]["org_id"];
+          var orgaddress = data[number]["org_address"];
+          var orgzip = data[number]["org_zip"];
+          console.log("ORGNAME: " + orgname);
 
-          if (orgtable.indexOf(orgname) == -1)
-          { //meaning not already in there- will have to change this if we want to show HOW they match 
-            orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
-          } 
+          
+          addressArray[number - 2] = orgaddress + " " +orgzip;
+          
+          nameArray[number -2 ] = orgname;
+
+          idArray[number - 2] = orgid;
+        } //end of for loop
+          //NOW do distance matrix stuff 
+
+     //          var source = "59 Evelyn Ave, West Seneca, NY 14224";
+     //  var source2 = "117 Susan Lane, Cheektowaga, NY 14225";
+
+        
+//    var name2 = orgname;
+  //  console.log(orgaddress + " " + orgzip);
+   // console.log(useraddress + " " + userzip);
+ /*   var request = {
+        origin: source,
+        destination: destination    
+    }; */
+
+//so if address[i] is valid, then get orgname[i]
+//then do if statement after getting all data 
+//could put this in a function and make it return results! 
+//http://stackoverflow.com/questions/7421442/how-to-calculate-distance-between-two-cities-using-google-maps-api-v3
+//function stuff(){
+    var service = new google.maps.DistanceMatrixService();
+    var distanceArray = new Array();
+    service.getDistanceMatrix({
+      //  origins: [source, source2],
+        origins: addressArray,
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.IMPERIAL,
+      //  unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, function (response, status) {
+      console.log("response");
+        if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+        //https://developers.google.com/maps/documentation/javascript/distancematrix
+        console.log("first if");
+        var origins = response.originAddresses;
+        for (var i = 0; i < origins.length; i++){
+          console.log("for..");
+          var temp_dist = response.rows[i].elements[0].distance.value;
+          var dist_text = response.rows[i].elements[0].distance.text;
+          console.log("temp_dist: " + temp_dist);
+          if (temp_dist < 33000 && orgtable.indexOf(nameArray[i]) == -1){ //< 33 km and not already listed
+            console.log("inside inside if");
+            console.log(nameArray[i] + " " + idArray[i]);
+              orgtable += "<tr><td>"+nameArray[i]+"</td><td><button class='more' id = "+idArray[i]+" dist = '"+dist_text+"'>More Info</button></td></tr>";
+              console.log("UPDATED " + orgtable);
+          }
         }
 
-        //something with organization ID!!!!
           orgtable += '</table>';
-        $("#mymatcheslist").html(orgtable);
+         console.log("SEE");
+         console.log("FINAL: " + orgtable);
+         $("#mymatcheslist").html(orgtable);
         $(".more").button();
-      }
+
+
+        /*    var distance = response.rows[0].elements[0].distance.text;
+            var dist2 = response.rows[0].elements[0].distance.value; //in meters!
+            var duration = response.rows[0].elements[0].duration.text;
+            var dvDistance = document.getElementById("dvDistance"); //what is this?
+            console.log("THIS:");
+            console.log(response.rows[0].elements[0].distance.value);
+            console.log(response.rows[1].elements[0].distance.value)
+           */
+     /*       console.log("distance to " + orgname+ ": " + distance + " val: " + dist2);
+            if(dist2 < 33000){
+              console.log("IF");
+              really();
+          //    orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
+            } //within 33 km aka 20 miles
+ */
+        } else {
+            alert("Unable to find the distance via road.");
+        }
+        return orgtable;
+    });
+       //   }
+
+         // stuff();
+         // console.log(A);
+          //for some reason can't reach this code! 
+     //     orgtable += '</table>';
+   //       console.log("SEE");
+    //      console.log("FINAL: " + orgtable);
+  
+
+
+
+     //       $("#mymatcheslist").html(orgtable);
+       //     $(".more").button();
+          } //success 
+     //   }
+    //  }
     })
-  };
+};
+
+
+       //   if (orgtable.indexOf(orgname) == -1)
+      //    { //meaning not already in there- will have to change this if we want to show HOW they match 
+
+/*
+            function matchLocation() {
+
+          //http://stackoverflow.com/questions/7421442/how-to-calculate-distance-between-two-cities-using-google-maps-api-v3
+          var origin = useraddress+ " " + userzip,
+          destination = orgaddress + " " + orgzip,
+          service = new google.maps.DistanceMatrixService();
+
+          service.getDistanceMatrix(
+        {
+          origins: [origin],
+          destinations: [destination],
+          travelMode: google.maps.TravelMode.DRIVING,
+          avoidHighways: false,
+          avoidTolls: false
+        }, 
+      callback
+      );
+
+    function callback(response, status) {
+      //  var orig = document.getElementById("orig"),
+        //    dest = document.getElementById("dest"),
+        //    dist = document.getElementById("dist");
+
+        if(status=="OK") {
+          var distance = response.rows[0].elements[0].distance.text;
+          console.log("Distance " + distance);
+          return distance;
+        //    orig.value = response.destinationAddresses[0];
+          //  dest.value = response.originAddresses[0];
+           // dist.value = response.rows[0].elements[0].distance.text;
+        } else {
+            alert("Error: " + status);
+        }
+        
+     }            
+         var found_distance = matchLocation();
+        */
+        //  if (found_distance <= 33){  //33 KM!
+
+       //Code from http://www.aspsnippets.com/Articles/Google-Maps-V3-API-Calculate-distance-between-two-addresses-points-locations.aspx
+       //api documentation https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
+/*    var source = orgaddress + " " + orgzip;
+    var destination = useraddress + " " + userzip;
+    var name2 = orgname;
+    console.log(orgaddress + " " + orgzip);
+    console.log(useraddress + " " + userzip);
+    var request = {
+        origin: source,
+        destination: destination    
+    };
+    //*********DISTANCE AND DURATION**********************
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix({
+        origins: [source],
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, function (response, status) {
+        if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+            var distance = response.rows[0].elements[0].distance.text;
+            var dist2 = response.rows[0].elements[0].distance.value; //in meters!
+            var duration = response.rows[0].elements[0].duration.text;
+            var dvDistance = document.getElementById("dvDistance"); //what is this?
+           
+            console.log("distance to " + orgname+ ": " + distance + " val: " + dist2);
+            if(dist2 < 33000){
+              console.log("IF");
+              really();
+              orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
+            } //within 33 km aka 20 miles
+ 
+        } else {
+            alert("Unable to find the distance via road.");
+        }
+    }); */
+//end of distance matrix stuff 
+    //      function really(){
+      //          console.log("really" + orgname);
+       //   }
+
+
+            //    orgtable += "<tr><td>"+orgname+"</td><td><button class='more' id = "+orgid+">More Info</button></td></tr>";
+         //     }
+                //console.log("should be " + orgid)
+         //   } */
+            //something with organization ID!!!!
+   //       }
+   //     }
+        //end of for loop. 
+
+
+      
 
  // adapted from following .deletedonationbutton function
   $("#content").on("click", ".more", function(){ //when "Tell me more" is pressed
     // The variable "user_donationsid" will capture the id of the donation that will be deleted.
 //    console.log("MORE");
     var organizationid = $(this).attr('id'); 
-  //  console.log(organizationid);
+    var distance = $(this).attr('dist');
+    console.log(organizationid);
+
     $.ajax({
       url: "cgi-bin/more.py",
       type: "GET",
@@ -346,6 +547,7 @@ $(document).ready(function(){
       },
       success: function(data){
         console.log("in sucess of more");
+        console.log(data);
       //  console.log(data[0]["a"]);
       //  console.log(data[1]["a"]);
       var count = Object.keys(data).length;
@@ -360,7 +562,8 @@ $(document).ready(function(){
       //http://stackoverflow.com/questions/15551779/open-link-in-new-tab
       //http://www.sitepoint.com/web-foundations/href-html-attribute/
       var temp = '<h1>Organization</h1><img src = "photos/'+org_photo+'" height = "50" width = "50"><h3>Information about '+org_name+'\
-      <button id = "hide">hide</button></h3><a target= "_blank" href="' +org_site+'">Organization site</a><h4>Address: '+org_address+' Zipcode: ' +org_zip+'</h4><div id="loc">Google Maps Geocoding:<input id="text_address" type="text" size="10" value= "'+org_zip+'"></div><div id="map_canvas"></div><h4>Matches:</h4><ul>';
+      <button id = "hide">hide</button></h3><a target= "_blank" href="' +org_site+'">Organization site</a><h4>Address: '+org_address+' ' +org_zip+'\
+      </h4><h5>Distance: '+distance+'</h5><div id="loc">Google Maps Geocoding:<input id="text_address" type="text" size="10" value= "'+org_address+' '+org_zip+'"></div><div id="map_canvas"></div><h4>Matches:</h4><ul>';
         for (var number = 1; number < count; number++){  
           var itemname = data[number]["itemname"];
          if (temp.indexOf(itemname) == -1)
@@ -378,6 +581,7 @@ $(document).ready(function(){
       var geocoder;
       var markers = new Array();
       var firstLoc;
+      var marker;
 
       function myGeocodeFirst() {
         geocoder = new google.maps.Geocoder();
@@ -391,7 +595,12 @@ $(document).ready(function(){
                 zoom: 12,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
               });
-             
+                //Code to adding a marker to map from https://developers.google.com/maps/documentation/javascript/markers
+                marker = new google.maps.Marker({
+                position: firstLoc,
+                map: map,
+                title: org_name
+             });          
             } 
             else {
               document.getElementById("text_status").value = status;
@@ -401,14 +610,6 @@ $(document).ready(function(){
       }
       myGeocodeFirst();
       
-
-
-
-
-
-
-
-
 
       }, error: function(){
         console.log("error of more");
@@ -484,6 +685,7 @@ $(document).ready(function(){
     console.log("SIGNUP clicked");
     $("#message").hide();
     if(IsValidZipCode($("#user_zip").val()) == 0){
+      console.log("valid zip");
     $.ajax({
       url: "cgi-bin/crud.py",
       type: "POST",
@@ -491,9 +693,11 @@ $(document).ready(function(){
       data: {
         usernameValue: $("#user_name").val(),
         passwordValue: $("#user_password").val(),
-        zipcodeValue: $("#user_zip").val()
+        zipcodeValue: $("#user_zip").val(),
+        addressValue: $("#user_address").val()
       },
       success: function(data){
+        console.log("in success");
         if (data=="already there"){
           console.log("IF");
            $("#message").show();
@@ -510,10 +714,14 @@ $(document).ready(function(){
         } else{
           $("#content").html("Signed Up");
         }
+      },
+      error: function(){
+        console.log("ajax error!");
       }
     })
   }else{ // Invalid ZIP code.
       // Code from https://jqueryui.com/tooltip/#forms
+      console.log("invalid zip");
       var tooltips = $( "[title]" ).tooltip({
       position: {
         my: "left top",

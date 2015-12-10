@@ -101,7 +101,7 @@ c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, p
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (21,"Rochester AmeriCorps", 14604, "acr.gif.jpg" , "http://www.RochesterAmeriCorps.org/", "228 East Main Street, Rochester NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (22,"Pathstone", 14607, "path.jpg" , "http://PathStone.org", "400 East Avenue, Rochester, NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (23,"AIDS Rochester", 14043, "blank.png" , "http://www.AIDSRochester.org", "1350 University Avenue, Rochester NY" )')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (24,"East House", 14607, "ehroch.jpg" , "http://www.EastHouse.org", "259 Monroe Avenue, Suite 200, Rochester NY" )')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (24,"East House", 14607, "ehroc.jpg" , "http://www.EastHouse.org", "259 Monroe Avenue, Suite 200, Rochester NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (25,"His Branches, Inc.", 14619, "hisbran.jpg" , "http://www.hisbranches.org/", "342 Arnett Boulevard, Rochester, NY" )')
 
 

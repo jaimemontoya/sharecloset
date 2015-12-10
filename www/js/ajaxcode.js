@@ -87,7 +87,17 @@ $(document).ready(function(){
   $(".aboutbutton").click(function(){
     $.ajax({      
       success: function(){
-        $("#content").html("Welcome to the About!");
+        $("#content").html("\
+         <div>\
+            <p><b>What is it?</b></p>\
+            <p>Sharitable is a web application through which individuals can connect with organizations like the Goodwill, homeless shelters, Boys and Girls Club, and more in order to donate certain items they have, or schedule pick-ups online. The objective is this web application is to create a centralized place where organizations and donors can connect.</p>\
+            <p><b>Who is our target?</b></p>\
+            <li>Local community service organizations: the place that needs the donation</li>\
+            <li>Individual donors: the people giving the donation</li>\
+            <p><b>What problem are we trying to solve?</b></p>\
+            <p>Individuals don't always know which organizations have a use for or are accepting the items they wish to donate. Smaller or newer organizations don't always have a large platform to disclose their needs. For larger organizations, it helps reduce getting donations that cannot be put to use. All organizations, large and small, can be found in one convenient application.</p>\
+          </div>\
+        ");
       }
     })
   });

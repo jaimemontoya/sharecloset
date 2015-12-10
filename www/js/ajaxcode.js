@@ -278,7 +278,7 @@ $(document).ready(function(){
       success: function(data){
         var count = Object.keys(data).length;
         console.log(count);
-        var donationstable = '<table><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
+        var donationstable = '<table class="t01"><tr><th>Item name</th><th>Item description</th><th>Quantity</th><th>Actions</th></tr>';
         for (var number = 0; number < count; number++){              
           var user_donationsid = data[number]["user_donationsid"];
           var itemname = data[number]["itemname"];
@@ -311,7 +311,7 @@ $(document).ready(function(){
         console.log("in suceess of update matches");
         //START HERE! "org_name"
         var count = Object.keys(data).length;
-        var orgtable = '<table><tr><th>Organization Name</th></tr>';
+        var orgtable = '<table class="t01"><tr><th>Organization Name</th></tr>';
         console.log("FIRST " + orgtable);
         var useraddress = data[0];
         var userzip = data[1];

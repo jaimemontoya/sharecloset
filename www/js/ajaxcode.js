@@ -212,26 +212,28 @@ $(document).ready(function(){
           selectoptiontype += "<option value="+key+">"+value+"</option>";
         });
         $("#donateitems").html("\
+        <div id='donateitemdiv'>\
         <div>\
-          <span>Type:</span>\
+          <label>Type:</label>\
           <select id='selecttype'>\
             <option value='0'>[Select type]</option>\
             "+selectoptiontype+"\
           </select>\
         </div>\
         <div>\
-          <span>Item:</span>\
+          <label>Item:</label>\
           <span id='spanselectsubtype'></span>\
         </div>\
         <div>\
-          <span>Description:</span>\
+          <label>Description:</label>\
           <input id='descriptioninput' type='text' size='20' />\
         </div>\
         <div>\
-          <span>Quantity:</span>\
+          <label>Quantity:</label>\
           <input id='quantityinput' type='text' size='10' />\
         </div>\
         <div><button id='donateitembutton'>Donate item</button></div>\
+        </div>\
         ");            
         $("#donateitembutton").button();
       }

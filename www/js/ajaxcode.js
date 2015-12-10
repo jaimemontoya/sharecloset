@@ -311,7 +311,7 @@ $(document).ready(function(){
         console.log("in suceess of update matches");
         //START HERE! "org_name"
         var count = Object.keys(data).length;
-        var orgtable = '<table class="t01"><tr><th>Organization Name</th></tr>';
+        var orgtable = '<table class="t01"><tr><th>Organization Name</th><th></th></tr>';
         console.log("FIRST " + orgtable);
         var useraddress = data[0];
         var userzip = data[1];

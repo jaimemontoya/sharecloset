@@ -105,6 +105,7 @@ c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, p
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (25,"His Branches, Inc.", 14627, "hisbran.jpg" , "http://www.hisbranches.org/", "342 Arnett Boulevard, Rochester, NY" )')
 #not real- but shows an organization that does not have a website. 
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (26,"Clothes 4 U", 14611, "blank.png" , "An organization run by the Jones family that donates clothes to the homeless in Rochester. Call 585-555-5555 for more information.", "36 Spruce Avenue, Rochester, NY" )')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (27,"Catholic Charities", 14212, "blank.png" , "http://www.ccwny.org/", "491 Emslie St, Buffalo, NY" )')
 
 
 #key of item id's 
@@ -147,7 +148,9 @@ c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,1)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,2)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,3)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,19)')
-
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (27,1)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (27,2)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (27,3)')
 #**how specific do we want this to be? subtypes or types? or combination? 
 
 conn.commit()

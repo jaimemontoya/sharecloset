@@ -7,7 +7,8 @@ a:hover{color: #fab10d}
 #logintext{padding-right: 20px}
 header{clear: both; width: 100%; background: #fff; padding: 0 0 120px 0}
 #headerlogo{color: #fff; float: left; padding-top: 47px}
-#logo{font-family: 'Kite One'; font-size: 25px; color: #fab10d; font-weight: bold}
+#logo a{font-family: 'Kite One'; font-size: 35px; color: #fab10d; font-weight: bold}
+#mission{font-family: 'Kite One'; font-size: 30px; color: black; font-weight: bold}
 #headermenu{float: right; margin: 0}
 #headermenu li{list-style: none; font-weight: bold; float: left; padding: 48px 20px}
 #headermenu li a{display: block}

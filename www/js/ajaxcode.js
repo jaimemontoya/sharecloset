@@ -77,7 +77,12 @@ $(document).ready(function(){
   $(".homebutton").click(function(){
     $.ajax({      
       success: function(){
-        $("#content").html("Welcome to the Home page!");
+        $("#content").html("\
+        <span>\
+            <h2 align='center' id='mission'>Bringing Donors and Local Non-Profits Together</h2>\
+            <img src='photos/sky.jpg' alt='cityView' width='100%' height='60%''>\
+          </span>\
+        ");
       }
     })
   });

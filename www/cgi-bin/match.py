@@ -1,6 +1,10 @@
 #!"C:\Python27\python.exe"
 #looking at other files from this project
 
+#Some code from:
+#https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4-query-database.py
+#https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4.py
+
 print "Content-Type: text/html"
 print # don't forget the extra newline	
 

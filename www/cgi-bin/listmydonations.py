@@ -1,5 +1,9 @@
 #!"C:\Python27\python.exe"
 
+#Some code from:
+#https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4-query-database.py
+#https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4.py
+
 print "Content-Type: text/html"
 print # don't forget the extra newline	
 

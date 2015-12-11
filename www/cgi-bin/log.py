@@ -1,6 +1,9 @@
 #!"C:\Python27\python.exe"
 # print the http header
-#stuff from lecture4.py
+
+#Some code from:
+#https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4-query-database.py
+#https://github.com/pgbovine/csc210-fall-2015/blob/master/www/cgi-bin/lecture4.py
 
 #this is for sign-up! 
 

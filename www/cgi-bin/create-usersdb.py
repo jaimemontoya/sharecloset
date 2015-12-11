@@ -77,13 +77,13 @@ c.execute('CREATE TABLE user_donation(user_donationsid integer primary key autoi
 
 # Creating a table called 'organization'
 c.execute('CREATE TABLE organization(organizationid integer primary key, organizationname varchar(30), zipcode integer, photo varchar(30), site varchar(100), address varchar(100))') #note: photo is name only!
-#filling in some values for now- double check if zipcodes are accurate. 
+
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (1,"Goodwill", 14627, "goodwill.jpg", "http://www.goodwill.org/", "120 Mount Hope Avenue, Rochester, NY ")')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (2,"Ronald McDonald House", 14620, "ronaldmcdonald.jpg", "http://www.rmhc.org/", "333 Westmoreland Dr., Rochester, NY")')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (3,"Hilliside Family of Agencies", 14611, "hillside.jpg", "https://www.hillside.com/","89 Genesee St, Rochester, NY")')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (4,"Foodlink Food Bank", 14627, "foodlink.jpg", "http://foodlinkny.org/","see website")')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (4,"Foodlink Food Bank", 14615, "foodlink.jpg", "http://foodlinkny.org/","1999 Mt. Read Blvd")')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (5,"Amvets", 14043, "amvets.jpg" , "http://amvetsnsf.org/thrift-stores/", "2900 Walden Avenue, Depew, NY" )')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (6,"Caring Hands for Angels", 14627, "caring.png" , "http://caringhandsforangels.com/", "see website" )')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (6,"Caring Hands for Angels", 14627, "caring.png" , "http://caringhandsforangels.com/", "" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (7,"CASA", 14614, "blank.png" , "http://www.CASARochester.org", "99 Exchange Boulevard, Rochester, NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (8,"Center for Youth", 14620, "cfy.jpg" , "http://www.centerforyouth.net/", "905 Monroe Avenue, Rochester NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (9,"Children Awaiting Parents", 14607, "cap.jpg" , "http://www.childrenawaitingparents.org/", "274 N. Goodman St., Rochester, NY " )')
@@ -94,7 +94,7 @@ c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, p
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (14,"Rochester Childfirst Network", 14620, "rcn.png" , "http://rcn4kids.org/", "941 South Avenue, Rochester NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (15,"Sojourner House", 14619, "sjh.jpg" , "http://www.SojournerHouse.org", "30 Millbank Street, Rochester, NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (16,"Twelve Corners Day Care", 14623, "tcd.png" , "http://www.TwelveCornersDayCare.com", "155 Canal View Boulevard, Rochester NY" )')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (17,"Webster Montessori School", 14580, "wms.jpeg.jpg" , "http://www.WebsterMontessori.org", "1310 Five Mile Line Road, Webster, NY " )')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (17,"Webster Montessori School", 14580, "wms.jpg" , "http://www.WebsterMontessori.org", "1310 Five Mile Line Road, Webster, NY " )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (18,"19th Ward Community Association", 14619, "19wc.png" , "http://www.19wca.org", "216 Thurston Road, Rochester NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (19,"Community Place of Greater Rochester", 14605, "cpr.png" , "http://www.CommunityPlace.org", "57 Central Park, Rochester, NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (20,"M.K. Gandhi Institute for Nonviolence", 14608, "blank.png" , "http://www.GandhiInstitute.org", "929 South Plymouth Avenue, Rochester, NY" )')
@@ -102,7 +102,9 @@ c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, p
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (22,"Pathstone", 14607, "path.jpg" , "http://PathStone.org", "400 East Avenue, Rochester, NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (23,"AIDS Rochester", 14043, "blank.png" , "http://www.AIDSRochester.org", "1350 University Avenue, Rochester NY" )')
 c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (24,"East House", 14607, "ehroc.jpg" , "http://www.EastHouse.org", "259 Monroe Avenue, Suite 200, Rochester NY" )')
-c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (25,"His Branches, Inc.", 14619, "hisbran.jpg" , "http://www.hisbranches.org/", "342 Arnett Boulevard, Rochester, NY" )')
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (25,"His Branches, Inc.", 14627, "hisbran.jpg" , "http://www.hisbranches.org/", "342 Arnett Boulevard, Rochester, NY" )')
+#not real- but shows an organization that does not have a website. 
+c.execute('INSERT INTO organization(organizationid, organizationname, zipcode, photo, site, address) VALUES (26,"Clothes 4 U", 14611, "blank.png" , "An organization run by the Jones family that donates clothes to the homeless in Rochester. Call 585-555-5555 for more information.", "36 Spruce Avenue, Rochester, NY" )')
 
 
 #key of item id's 
@@ -140,6 +142,11 @@ c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (24,1)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (23,3)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (24,5)')
 c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (25,5)')
+
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,1)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,2)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,3)')
+c.execute('INSERT INTO item_organization(org_id, org_itemid) VALUES (26,19)')
 
 #**how specific do we want this to be? subtypes or types? or combination? 
 

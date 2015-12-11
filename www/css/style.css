@@ -18,12 +18,14 @@ header{clear: both; width: 100%; background: #fff; padding: 0 0 120px 0}
 #leftCol{width: 300px !important; padding: 0 10px}
 #rightCol{width: 300px !important}
 #farRight{width: 300px !important}
+/*Code for contact form from http://www.123contactform.com/my-simple-html-contact-form.php */
+#contact_form{border:none 1px #e5e5e5;padding:10px 20px 50px 20px;  -webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;}
 /* Code for label and input, from http://jsfiddle.net/rQ99r/5/ */
 label{display: inline-block; width: 90px}
 input[type="text"]{display: inline-block; margin-bottom: 5px; margin-left: 5px}
 #donateitemdiv{padding: 12px 0}
 /* Code for table from http://www.w3schools.com/html/tryit.asp?filename=tryhtml_table_id2 */
-table{width:100%; font-size: 14px; margin: 5px 0}
+table{width:280px; font-size: 14px; margin: 5px 0}
 table, th, td{border: 1px solid black; border-collapse: collapse}
 th, td{padding: 5px; text-align: left}
 table.t01 tr:nth-child(even){background-color: #eee}

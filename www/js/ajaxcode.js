@@ -102,23 +102,20 @@ $(document).ready(function(){
     $.ajax({
       success: function(){
     //Code for contact form from http://www.123contactform.com/my-simple-html-contact-form.php
-        $("#content").html("<h1>Contact</h1>\
-        <form id='contact_form' action='#' method='POST' enctype='multipart/form-data'>\
-          <div class='row'>\
-            <label for='name'>Your name:</label><br />\
-            <input id='name' class='input' name='name' type='text' value='' size='30' /><br />\
+        $("#content").html("\
+          <h1>Contact</h1>\
+          <div>\
+            <form id='contact_form' method='post' name='myemailform' action='form-to-email.php'>\
+            Enter Name: <input class='input' type='text' name='name' size='40'>\
+            <br>\
+            Enter Email Address: <input type='text' class='input' name='email' size='40'>\
+            <br>\
+            Enter Message:  <textarea class='input' name='message' rows='7' cols='50' ></textarea>\
+            <br>\
+            <input type='submit' id='sendEmail' value='Send Form'>\
+            </form>\
           </div>\
-          <div class='row'>\
-            <label for='email'>Your email:</label><br />\
-            <input id='email' class='input' name='email' type='text' value='' size='30' /><br />\
-          </div>\
-          <div class='row'>\
-            <label for='message'>Your message:</label><br />\
-            <textarea id='message' class='input' name='message' rows='7' cols='30'></textarea><br />\
-          </div>\
-          <input type='hidden' name='action' value='submit'/>\
-          <input id='submit_button' type='submit' value='Send email' />\
-        </form>");
+        ");
       }
     });
   });
@@ -579,9 +576,4 @@ $(document).ready(function(){
     tooltips.tooltip( "open" );
   }
   });
-  var mylink = "addItems.html";
-  var windowname = "Bob";
-  var mylink2 = "preview.html";
-  var windowname2 = "Preview";
-
 });
